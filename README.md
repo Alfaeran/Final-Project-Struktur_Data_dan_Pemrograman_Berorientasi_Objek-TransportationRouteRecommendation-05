@@ -1,5 +1,16 @@
 # TransportationRouteRecommendation
+## Kelompok
 
+Nama | NRP
+--- | ---
+Evan Christian Nainggolan | 5027241026
+Ahmad Rafi Fadhillah Dwiputra | 5027241068
+Maritza Adelia Sucipto | 5027241111
+M. Alfaeran Auriga Ruswandi | 5027241115
+Zahra Hafizha | 5027241121
+
+
+## Structure
 ```c
 TransportationRouteRecommendation/
 ├── README.md
