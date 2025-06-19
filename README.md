@@ -1,5 +1,5 @@
 # Final Project Stuktur Data dan Pemrograman Berorientasi Objek
-## Sistem Rekomendasi Rute Transportasi
+## Sistem Rekomendasi Rute Transportasi Berbasis Preferensi Pengguna
 
 ### Deskripsi
 Proyek ini merupakan implementasi sistem rekomendasi rute transportasi yang mempertimbangkan preferensi pengguna (waktu tempuh, jarak, biaya, dll). Sistem dibangun dengan bahasa pemrograman **C++** menggunakan **struktur data Graph dan Tree**, serta menerapkan prinsip **Object-Oriented Programming (OOP)**.
