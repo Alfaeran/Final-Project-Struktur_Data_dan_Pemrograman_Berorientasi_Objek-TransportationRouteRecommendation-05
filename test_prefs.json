@@ -1,8 +1,0 @@
-{
-  "timeWeight": 0.25,
-  "distanceWeight": 0.25,
-  "costWeight": 0.25,
-  "transferWeight": 0.25,
-  "primaryCriterion": "time",
-  "preferenceMode": "simple"
-}
