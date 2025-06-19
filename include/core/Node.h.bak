@@ -1,0 +1,50 @@
+#pragma once 
+#include <string> 
+#include <utility> 
+ 
+class Node 
+{ 
+public: 
+    // Constructor 
+    Node(const std::string& name, double latitude, double longitude); 
+    Node(const Node& other);            // Copy constructor 
+    Node& operator=(const Node& other); // Assignment operator 
+ 
+    // Getter methods 
+    std::string getName() const; 
+    double getLatitude() const; 
+    double getLongitude() const; 
+    std::pair<double, double> getCoordinates() const; 
+ 
+    // Setter methods 
+    void setName(const std::string& newName); 
+    void setLatitude(double lat); 
+    void setLongitude(double lng); 
+ 
+    // Geographic calculations 
+    double distanceTo(const Node& other) const; 
+    double bearingTo(const Node& other) const; 
+    bool isWithinRadius(const Node& other, double radiusMeters) const; 
+ 
+    // Utility methods 
+    std::string toString() const; 
+    void displayInfo() const; 
+    std::size_t hash() const; 
+ 
+    // Comparison operators 
+    bool operator==(const Node& other) const; 
+    bool operator!=(const Node& other) const; 
+    bool operator<(const Node& other) const; 
+ 
+private: 
+    std::string name; 
+    double latitude; 
+    double longitude; 
+ 
+    // Helper methods 
+    bool isValidCoordinate(double lat, double lon) const; 
+    double toRadians(double degrees) const; 
+}; 
+ 
+// Stream operator overload 
+std::ostream& operator<<(std::ostream& os, const Node& node); 

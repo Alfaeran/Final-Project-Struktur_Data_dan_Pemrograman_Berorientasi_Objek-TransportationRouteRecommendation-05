@@ -1,0 +1,117 @@
+{
+  "user_profile": {
+    "user_id": "user_001",
+    "name": "Default User",
+    "profile_type": "general",
+    "created_date": "2025-06-11",
+    "last_modified": "2025-06-11"
+  },
+  "optimization_weights": {
+    "description": "Weight values for multi-criteria optimization (total should sum to 1.0)",
+    "time_weight": 0.4,
+    "distance_weight": 0.2,
+    "cost_weight": 0.3,
+    "transfer_weight": 0.1
+  },
+  "transportation_modes": {
+    "description": "Preferred transportation modes (1.0 = most preferred, 0.0 = avoid)",
+    "bus": 1.0,
+    "mrt": 1.0,
+    "lrt": 0.8,
+    "krl": 0.9,
+    "angkot": 0.6,
+    "ojek": 0.3,
+    "taxi": 0.7,
+    "walking": 0.4
+  },
+  "route_preferences": {
+    "max_walking_distance": 1000,
+    "max_transfer_count": 2,
+    "max_total_time": 120,
+    "max_total_cost": 50000,
+    "prefer_covered_stations": true,
+    "avoid_crowded_routes": false,
+    "accessibility_required": false
+  },
+  "decision_tree_config": {
+    "use_decision_tree": true,
+    "tree_depth": 3,
+    "questions": [
+      {
+        "id": 1,
+        "question": "Is travel time more important than cost?",
+        "true_action": "prioritize_time",
+        "false_action": "prioritize_cost",
+        "threshold": 0.5
+      },
+      {
+        "id": 2,
+        "question": "Do you prefer fewer transfers?",
+        "true_action": "minimize_transfers",
+        "false_action": "allow_transfers",
+        "threshold": 0.7
+      },
+      {
+        "id": 3,
+        "question": "Is walking distance a concern?",
+        "true_action": "minimize_walking",
+        "false_action": "allow_walking",
+        "threshold": 0.6
+      }
+    ]
+  },
+  "scoring_method": {
+    "method": "weighted_sum",
+    "alternatives": [
+      "weighted_sum",
+      "topsis",
+      "decision_tree",
+      "ahp"
+    ],
+    "normalization": "min_max",
+    "custom_formula": "(0.4 * normalized_time) + (0.3 * normalized_cost) + (0.2 * normalized_distance) + (0.1 * normalized_transfers)"
+  },
+  "time_preferences": {
+    "preferred_departure_time": "08:00",
+    "preferred_arrival_time": "17:00",
+    "avoid_rush_hours": true,
+    "rush_hour_penalty": 1.5
+  },
+  "cost_preferences": {
+    "budget_limit": 25000,
+    "prefer_cheaper": true,
+    "cost_sensitivity": "medium",
+    "discount_preferences": {
+      "student_discount": false,
+      "senior_discount": false,
+      "commuter_pass": true
+    }
+  },
+  "accessibility_settings": {
+    "wheelchair_accessible": false,
+    "elevator_required": false,
+    "escalator_ok": true,
+    "visual_impairment_support": false,
+    "hearing_impairment_support": false
+  },
+  "notification_preferences": {
+    "route_updates": true,
+    "traffic_alerts": true,
+    "price_changes": false,
+    "new_routes": true
+  },
+  "custom_preferences": {
+    "favorite_stations": [
+      "Station_A",
+      "Terminal_X",
+      "Mall_Y"
+    ],
+    "avoid_stations": [],
+    "preferred_operators": [
+      "TransJakarta",
+      "MRT Jakarta"
+    ],
+    "language": "id",
+    "units": "metric"
+  }
+}

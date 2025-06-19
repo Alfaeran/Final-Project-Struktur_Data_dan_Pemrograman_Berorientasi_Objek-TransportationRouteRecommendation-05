@@ -1,0 +1,15 @@
+# Small Graph Dataset untuk Testing Algoritma
+# 6 nodes, 12 edges - Simple transportation network
+source,destination,distance_m,time_min,cost_idr,transit
+A,B,1000,5,3000,0
+A,C,1500,8,3500,0
+B,C,800,4,2500,0
+B,D,2000,10,4000,0
+C,D,1200,6,3000,0
+C,E,1800,9,4500,0
+D,E,1000,5,3500,0
+D,F,2200,12,5000,0
+E,F,1500,7,4000,0
+A,D,3000,15,6000,1
+B,E,2500,12,5500,1
+C,F,3200,16,6500,1

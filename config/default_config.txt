@@ -1,0 +1,7 @@
+# Default configuration for Transportation Route Recommendation System
+# Lines starting with # are comments
+
+data_dir=../data/sample_data/
+log_level=INFO
+algorithm=Dijkstra
+user_preferences=../config/user_preferences.json

@@ -1,0 +1,19 @@
+source,destination,distance_m,time_min,cost_idr,transit
+# Transportation Network Template
+# Format: source,destination,distance_m,time_min,cost_idr,transit
+# Example entries (remove these lines and add your actual data):
+Station_A,Station_B,1500,8,4000,0
+Station_B,Station_C,2300,12,5000,0
+Station_C,Station_D,1800,10,4500,1
+Station_A,Station_D,4500,25,8000,1
+Station_B,Station_D,3200,18,6500,0
+Terminal_X,Station_A,800,5,3000,0
+Terminal_X,Mall_Y,2100,15,5500,0
+Mall_Y,Station_C,1600,9,4200,0
+Hospital_Z,Terminal_X,1900,11,4800,0
+Hospital_Z,Station_D,2800,16,6000,1
+# Add more routes following the same format
+# distance_m: Distance in meters
+# time_min: Travel time in minutes  
+# cost_idr: Cost in Indonesian Rupiah
+# transit: Number of transfers (0 = direct, 1+ = transfers required)
