@@ -491,21 +491,22 @@ public:
         }
 
         std::cout << "\n🚀 Finding optimal route..." << std::endl;
-        RouteResult result = PathFinder::dijkstra(graph, start, end, criteria);        if (result.isValid)
+        RouteResult result = PathFinder::dijkstra(graph, start, end, criteria);
+        if (result.isValid)
         {
             std::cout << "\n✅ ROUTE FOUND!" << std::endl;
             std::cout << std::string(60, '=') << std::endl;
-            
+
             // Display detailed route path
             std::cout << "📍 DETAILED ROUTE PATH:" << std::endl;
             std::cout << std::string(40, '-') << std::endl;
-            
+
             for (size_t i = 0; i < result.path.size(); i++)
             {
-                const Node& node = graph.getNode(result.path[i]);
-                std::cout << "Step " << (i + 1) << ": 🚉 " << result.path[i] 
+                const Node &node = graph.getNode(result.path[i]);
+                std::cout << "Step " << (i + 1) << ": 🚉 " << result.path[i]
                           << " (" << node.name << ")" << std::endl;
-                          
+
                 // Show connection details between stations
                 if (i < result.path.size() - 1)
                 {
@@ -514,7 +515,7 @@ public:
                     {
                         if (edge.to == result.path[i + 1])
                         {
-                            std::cout << "   └─> Transport: " << edge.mode 
+                            std::cout << "   └─> Transport: " << edge.mode
                                       << " | Distance: " << edge.distance << "m"
                                       << " | Time: " << edge.time << "min"
                                       << " | Cost: $" << edge.cost;
@@ -526,7 +527,7 @@ public:
                     }
                 }
             }
-            
+
             std::cout << std::string(40, '-') << std::endl;
             std::cout << "📊 ROUTE SUMMARY:" << std::endl;
             std::cout << "   🎯 Origin: " << start << " → Destination: " << end << std::endl;
@@ -663,7 +664,8 @@ public:
         {
             std::cout << "⚠️ Some tests failed. Check system configuration." << std::endl;
         }
-    }    void generateMapData()
+    }
+    void generateMapData()
     {
         std::cout << "\n🗺️ GENERATING INTERACTIVE MAP DATA" << std::endl;
         std::cout << std::string(40, '-') << std::endl;
@@ -693,9 +695,9 @@ public:
             htmlFile << "</style>" << std::endl;
             htmlFile << "</head>" << std::endl;
             htmlFile << "<body>" << std::endl;
-            
+
             htmlFile << "<h1>🚌 Jakarta Transportation Network - Interactive Route Map</h1>" << std::endl;
-            
+
             htmlFile << "<div class='info'>" << std::endl;
             htmlFile << "<h2>📊 Network Statistics:</h2>" << std::endl;
             htmlFile << "<p><strong>Total Stations:</strong> " << graph.getNodeCount() << "</p>" << std::endl;
@@ -705,7 +707,7 @@ public:
 
             // Interactive map container
             htmlFile << "<div id='map'></div>" << std::endl;
-            
+
             htmlFile << "<div class='route-demo'>" << std::endl;
             htmlFile << "<h3>🛤️ Sample Route Demonstration</h3>" << std::endl;
             htmlFile << "<p><strong>Featured Route:</strong> Central Station → University (Fastest Time)</p>" << std::endl;
@@ -720,7 +722,7 @@ public:
             htmlFile << "<script>" << std::endl;
             htmlFile << "// Initialize the map centered on Jakarta" << std::endl;
             htmlFile << "var map = L.map('map').setView([-6.2, 106.8], 11);" << std::endl;
-            
+
             htmlFile << "// Add beautiful map tiles" << std::endl;
             htmlFile << "L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {" << std::endl;
             htmlFile << "    attribution: '© OpenStreetMap contributors | Transportation Route System'" << std::endl;
@@ -740,7 +742,7 @@ public:
                 htmlFile << "    iconAnchor: [10, 10]" << std::endl;
                 htmlFile << "  })" << std::endl;
                 htmlFile << "}).addTo(map);" << std::endl;
-                
+
                 // Create detailed popup content
                 htmlFile << "marker" << nodeId << ".bindPopup('<div style=\"min-width: 200px;\">" << std::endl;
                 htmlFile << "<h4 style=\"margin: 0 0 10px 0; color: #333;\">🚉 " << nodeId << "</h4>" << std::endl;
@@ -758,15 +760,16 @@ public:
                 {
                     htmlFile << "\n// Sample route visualization (Central_Station to University)" << std::endl;
                     htmlFile << "var routeCoords = [" << std::endl;
-                    
+
                     for (size_t i = 0; i < sampleRoute.path.size(); i++)
                     {
                         const Node &node = graph.getNode(sampleRoute.path[i]);
                         htmlFile << "  [" << node.latitude << ", " << node.longitude << "]";
-                        if (i < sampleRoute.path.size() - 1) htmlFile << ",";
+                        if (i < sampleRoute.path.size() - 1)
+                            htmlFile << ",";
                         htmlFile << std::endl;
                     }
-                    
+
                     htmlFile << "];" << std::endl;
                     htmlFile << "var routeLine = L.polyline(routeCoords, {" << std::endl;
                     htmlFile << "  color: '#ff0000'," << std::endl;
@@ -775,7 +778,7 @@ public:
                     htmlFile << "  dashArray: '10, 5'," << std::endl;
                     htmlFile << "  lineJoin: 'round'" << std::endl;
                     htmlFile << "}).addTo(map);" << std::endl;
-                    
+
                     // Create detailed route popup
                     htmlFile << "var routePopupContent = '<div style=\"min-width: 250px;\">" << std::endl;
                     htmlFile << "<h4 style=\"margin: 0 0 10px 0; color: #d63031;\">🛤️ Sample Route Details</h4>" << std::endl;
@@ -788,17 +791,18 @@ public:
                     htmlFile << "<p><strong>🔄 Transfers:</strong> " << sampleRoute.totalTransfers << "</p>" << std::endl;
                     htmlFile << "<hr style=\"margin: 10px 0;\">" << std::endl;
                     htmlFile << "<p><strong>🚉 Stations (" << sampleRoute.path.size() << "):</strong><br>";
-                    
+
                     // Add all stations in the route
                     for (size_t i = 0; i < sampleRoute.path.size(); i++)
                     {
                         htmlFile << (i + 1) << ". " << sampleRoute.path[i];
-                        if (i < sampleRoute.path.size() - 1) htmlFile << "<br>";
+                        if (i < sampleRoute.path.size() - 1)
+                            htmlFile << "<br>";
                     }
                     htmlFile << "</p></div>';" << std::endl;
-                    
+
                     htmlFile << "routeLine.bindPopup(routePopupContent);" << std::endl;
-                    
+
                     // Auto-fit the map to show the complete route
                     htmlFile << "map.fitBounds(routeLine.getBounds(), {padding: [20, 20]});" << std::endl;
                 }
@@ -834,7 +838,7 @@ public:
                 }
             }
             htmlFile << "</table>" << std::endl;
-            
+
             htmlFile << "<div class='info'>" << std::endl;
             htmlFile << "<h3>💡 Interactive Map Guide:</h3>" << std::endl;
             htmlFile << "<ul>" << std::endl;
@@ -845,9 +849,10 @@ public:
             htmlFile << "</ul>" << std::endl;
             htmlFile << "<p><em>This map demonstrates the Transportation Route Recommendation System's pathfinding capabilities with interactive visualization.</em></p>" << std::endl;
             htmlFile << "</div>" << std::endl;
-            
+
             htmlFile << "</body></html>" << std::endl;
-            htmlFile.close();            std::cout << "✅ Interactive map with route visualization generated: jakarta_map_simple.html" << std::endl;
+            htmlFile.close();
+            std::cout << "✅ Interactive map with route visualization generated: jakarta_map_simple.html" << std::endl;
             std::cout << "🗺️  Features: Interactive markers, route polyline, detailed popups, auto-zoom" << std::endl;
             std::cout << "📄 Open the file in a web browser to explore the enhanced network visualization." << std::endl;
         }
