@@ -23,8 +23,8 @@
 <body>
     <div class="info-panel">
         <h3>Jakarta Transportation Network</h3>
-        <p>Total Stations: 5</p>
-        <p>Total Connections: 10</p>
+        <p>Total Stations: 15</p>
+        <p>Total Connections: 30</p>
     </div>
     <div id="map"></div>
     <div class="legend">
@@ -49,53 +49,153 @@
         L.circleMarker([-6.2088, 106.846], {
             radius: 8, fillColor: '#e74c3c', color: 'white',
             weight: 2, opacity: 1, fillOpacity: 0.8
-        }).addTo(map).bindPopup('<b>Airport</b><br>Zone: central');
+        }).addTo(map).bindPopup('<b>Alun Alun Bandung</b><br>Zone: central');
         L.circleMarker([-6.2088, 106.846], {
             radius: 8, fillColor: '#e74c3c', color: 'white',
             weight: 2, opacity: 1, fillOpacity: 0.8
-        }).addTo(map).bindPopup('<b>Bus_Terminal</b><br>Zone: central');
+        }).addTo(map).bindPopup('<b>Cibeureum</b><br>Zone: central');
         L.circleMarker([-6.2088, 106.846], {
             radius: 8, fillColor: '#e74c3c', color: 'white',
             weight: 2, opacity: 1, fillOpacity: 0.8
-        }).addTo(map).bindPopup('<b>Central_Station</b><br>Zone: central');
+        }).addTo(map).bindPopup('<b>Cicaheum</b><br>Zone: central');
         L.circleMarker([-6.2088, 106.846], {
             radius: 8, fillColor: '#e74c3c', color: 'white',
             weight: 2, opacity: 1, fillOpacity: 0.8
-        }).addTo(map).bindPopup('<b>Mall_Plaza</b><br>Zone: central');
+        }).addTo(map).bindPopup('<b>Cihampelas</b><br>Zone: central');
         L.circleMarker([-6.2088, 106.846], {
             radius: 8, fillColor: '#e74c3c', color: 'white',
             weight: 2, opacity: 1, fillOpacity: 0.8
-        }).addTo(map).bindPopup('<b>University</b><br>Zone: central');
+        }).addTo(map).bindPopup('<b>Cimahi</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Dago</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>ITB</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Kiara Condong</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Sarijadi</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Setiabudi</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Stasiun Bandung</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Terminal Leuwipanjang</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Ujungberung</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>Unpad Dipatiukur</b><br>Zone: central');
+        L.circleMarker([-6.2088, 106.846], {
+            radius: 8, fillColor: '#e74c3c', color: 'white',
+            weight: 2, opacity: 1, fillOpacity: 0.8
+        }).addTo(map).bindPopup('<b>ruamh aron</b><br>Zone: central');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Airport → Central_Station<br>Distance: 25000km<br>Time: 45 min');
+        }).addTo(map).bindPopup('Route: Alun Alun Bandung → Stasiun Bandung<br>Distance: 1800km<br>Time: 5 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Bus_Terminal → Central_Station<br>Distance: 1500km<br>Time: 15 min');
+        }).addTo(map).bindPopup('Route: Alun Alun Bandung → Cicaheum<br>Distance: 6500km<br>Time: 18 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Bus_Terminal → Mall_Plaza<br>Distance: 2000km<br>Time: 20 min');
+        }).addTo(map).bindPopup('Route: Alun Alun Bandung → Cimahi<br>Distance: 12500km<br>Time: 35 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Central_Station → Bus_Terminal<br>Distance: 1500km<br>Time: 15 min');
+        }).addTo(map).bindPopup('Route: Cibeureum → Terminal Leuwipanjang<br>Distance: 9200km<br>Time: 26 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Central_Station → Airport<br>Distance: 25000km<br>Time: 45 min');
+        }).addTo(map).bindPopup('Route: Cibeureum → Ujungberung<br>Distance: 7500km<br>Time: 22 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Central_Station → University<br>Distance: 12000km<br>Time: 40 min');
+        }).addTo(map).bindPopup('Route: Cicaheum → Cibeureum<br>Distance: 4800km<br>Time: 14 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Mall_Plaza → Bus_Terminal<br>Distance: 2000km<br>Time: 20 min');
+        }).addTo(map).bindPopup('Route: Cicaheum → Ujungberung<br>Distance: 4200km<br>Time: 12 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: Mall_Plaza → University<br>Distance: 8000km<br>Time: 35 min');
+        }).addTo(map).bindPopup('Route: Cihampelas → Setiabudi<br>Distance: 4200km<br>Time: 14 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: University → Mall_Plaza<br>Distance: 8000km<br>Time: 35 min');
+        }).addTo(map).bindPopup('Route: Cihampelas → Alun Alun Bandung<br>Distance: 3200km<br>Time: 10 min');
         L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
             color: '#666', weight: 3, opacity: 0.7
-        }).addTo(map).bindPopup('Route: University → Central_Station<br>Distance: 12000km<br>Time: 40 min');
+        }).addTo(map).bindPopup('Route: Cimahi → Terminal Leuwipanjang<br>Distance: 8500km<br>Time: 28 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Cimahi → Cibeureum<br>Distance: 6500km<br>Time: 18 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Dago → ITB<br>Distance: 1200km<br>Time: 4 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Dago → Cibeureum<br>Distance: 8200km<br>Time: 24 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Dago → Cicaheum<br>Distance: 9800km<br>Time: 28 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: ITB → Cihampelas<br>Distance: 1800km<br>Time: 6 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: ITB → Unpad Dipatiukur<br>Distance: 2800km<br>Time: 8 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Kiara Condong → Stasiun Bandung<br>Distance: 6200km<br>Time: 18 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Kiara Condong → Cibeureum<br>Distance: 8500km<br>Time: 24 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Sarijadi → Cimahi<br>Distance: 6800km<br>Time: 22 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Sarijadi → Dago<br>Distance: 7800km<br>Time: 22 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Setiabudi → Sarijadi<br>Distance: 5200km<br>Time: 18 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Setiabudi → ITB<br>Distance: 5500km<br>Time: 16 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Stasiun Bandung → Dago<br>Distance: 3500km<br>Time: 12 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Stasiun Bandung → Terminal Leuwipanjang<br>Distance: 8800km<br>Time: 25 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Stasiun Bandung → Setiabudi<br>Distance: 6800km<br>Time: 20 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Terminal Leuwipanjang → Alun Alun Bandung<br>Distance: 7500km<br>Time: 22 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Terminal Leuwipanjang → ITB<br>Distance: 9500km<br>Time: 28 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Ujungberung → Kiara Condong<br>Distance: 5800km<br>Time: 16 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Unpad Dipatiukur → Alun Alun Bandung<br>Distance: 4500km<br>Time: 14 min');
+        L.polyline([[-6.2088, 106.846], [-6.2088, 106.846]], {
+            color: '#666', weight: 3, opacity: 0.7
+        }).addTo(map).bindPopup('Route: Unpad Dipatiukur → Cihampelas<br>Distance: 5200km<br>Time: 15 min');
         
         console.log('Jakarta Transportation Map loaded successfully!');
     </script>

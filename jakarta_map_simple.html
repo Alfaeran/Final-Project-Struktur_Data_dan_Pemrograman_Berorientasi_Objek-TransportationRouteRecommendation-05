@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jakarta Transportation Network - Interactive Route Visualization</title>
+<meta charset='utf-8' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
+<script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+#map { height: 500px; width: 100%; border: 3px solid #333; border-radius: 10px; }
+.info { background: #ffffff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #4CAF50; color: white; }
+.route-demo { background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 5px solid #4CAF50; }
+h1 { color: #333; text-align: center; }
+h2, h3 { color: #555; }
+</style>
+</head>
+<body>
+<h1>🚌 Jakarta Transportation Network - Interactive Route Map</h1>
+<div class='info'>
+<h2>📊 Network Statistics:</h2>
+<p><strong>Total Stations:</strong> 5</p>
+<p><strong>Total Connections:</strong> 10</p>
+<p><strong>Network Status:</strong> Fully Connected ✅</p>
+</div>
+<div id='map'></div>
+<div class='route-demo'>
+<h3>🛤️ Sample Route Demonstration</h3>
+<p><strong>Featured Route:</strong> Central Station → University (Fastest Time)</p>
+<p>The map above shows:</p>
+<ul>
+<li>🔵 <strong>Blue Markers:</strong> All transportation stations/stops</li>
+<li>🔴 <strong>Red Route Line:</strong> Sample optimal route path</li>
+<li>📍 <strong>Interactive Elements:</strong> Click markers and routes for details</li>
+</ul>
+</div>
+<script>
+// Initialize the map centered on Jakarta
+var map = L.map('map').setView([-6.2, 106.8], 11);
+// Add beautiful map tiles
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors | Transportation Route System'
+}).addTo(map);
+// Add station markers with custom styling
+var markerAirport = L.marker([-6.125, 106.656], {
+  icon: L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  })
+}).addTo(map);
+markerAirport.bindPopup('<div style="min-width: 200px;">
+<h4 style="margin: 0 0 10px 0; color: #333;">🚉 Airport</h4>
+<p style="margin: 5px 0;"><strong>Name:</strong> Bandara Soekarno-Hatta</p>
+<p style="margin: 5px 0;"><strong>Coordinates:</strong><br>Lat: -6.125<br>Lon: 106.656</p>
+<p style="margin: 5px 0;"><strong>Connections:</strong> 1 routes</p>
+</div>');
+var markerBus_Terminal = L.marker([-6.21, 106.81], {
+  icon: L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  })
+}).addTo(map);
+markerBus_Terminal.bindPopup('<div style="min-width: 200px;">
+<h4 style="margin: 0 0 10px 0; color: #333;">🚉 Bus_Terminal</h4>
+<p style="margin: 5px 0;"><strong>Name:</strong> Terminal Bus</p>
+<p style="margin: 5px 0;"><strong>Coordinates:</strong><br>Lat: -6.21<br>Lon: 106.81</p>
+<p style="margin: 5px 0;"><strong>Connections:</strong> 2 routes</p>
+</div>');
+var markerCentral_Station = L.marker([-6.2, 106.8], {
+  icon: L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  })
+}).addTo(map);
+markerCentral_Station.bindPopup('<div style="min-width: 200px;">
+<h4 style="margin: 0 0 10px 0; color: #333;">🚉 Central_Station</h4>
+<p style="margin: 5px 0;"><strong>Name:</strong> Stasiun Pusat</p>
+<p style="margin: 5px 0;"><strong>Coordinates:</strong><br>Lat: -6.2<br>Lon: 106.8</p>
+<p style="margin: 5px 0;"><strong>Connections:</strong> 3 routes</p>
+</div>');
+var markerMall_Plaza = L.marker([-6.22, 106.82], {
+  icon: L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  })
+}).addTo(map);
+markerMall_Plaza.bindPopup('<div style="min-width: 200px;">
+<h4 style="margin: 0 0 10px 0; color: #333;">🚉 Mall_Plaza</h4>
+<p style="margin: 5px 0;"><strong>Name:</strong> Plaza Indonesia</p>
+<p style="margin: 5px 0;"><strong>Coordinates:</strong><br>Lat: -6.22<br>Lon: 106.82</p>
+<p style="margin: 5px 0;"><strong>Connections:</strong> 2 routes</p>
+</div>');
+var markerUniversity = L.marker([-6.36, 106.83], {
+  icon: L.divIcon({
+    className: 'custom-div-icon',
+    html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10]
+  })
+}).addTo(map);
+markerUniversity.bindPopup('<div style="min-width: 200px;">
+<h4 style="margin: 0 0 10px 0; color: #333;">🚉 University</h4>
+<p style="margin: 5px 0;"><strong>Name:</strong> Universitas Indonesia</p>
+<p style="margin: 5px 0;"><strong>Coordinates:</strong><br>Lat: -6.36<br>Lon: 106.83</p>
+<p style="margin: 5px 0;"><strong>Connections:</strong> 2 routes</p>
+</div>');
+
+// Sample route visualization (Central_Station to University)
+var routeCoords = [
+  [-6.2, 106.8],
+  [-6.36, 106.83]
+];
+var routeLine = L.polyline(routeCoords, {
+  color: '#ff0000',
+  weight: 5,
+  opacity: 0.8,
+  dashArray: '10, 5',
+  lineJoin: 'round'
+}).addTo(map);
+var routePopupContent = '<div style="min-width: 250px;">
+<h4 style="margin: 0 0 10px 0; color: #d63031;">🛤️ Sample Route Details</h4>
+<p><strong>Route:</strong> Central_Station → University</p>
+<p><strong>Optimization:</strong> Fastest Time</p>
+<hr style="margin: 10px 0;">
+<p><strong>📏 Distance:</strong> 12000 meters</p>
+<p><strong>⏱️ Time:</strong> 40 minutes</p>
+<p><strong>💰 Cost:</strong> $12000</p>
+<p><strong>🔄 Transfers:</strong> 1</p>
+<hr style="margin: 10px 0;">
+<p><strong>🚉 Stations (2):</strong><br>1. Central_Station<br>2. University</p></div>';
+routeLine.bindPopup(routePopupContent);
+map.fitBounds(routeLine.getBounds(), {padding: [20, 20]});
+</script>
+<h2>🚉 Station Directory:</h2>
+<table>
+<tr><th>Station ID</th><th>Station Name</th><th>Latitude</th><th>Longitude</th><th>Direct Connections</th></tr>
+<tr><td><strong>Airport</strong></td><td>Bandara Soekarno-Hatta</td><td>-6.1250</td><td>106.6556</td><td>1 routes</td></tr>
+<tr><td><strong>Bus_Terminal</strong></td><td>Terminal Bus</td><td>-6.2100</td><td>106.8100</td><td>2 routes</td></tr>
+<tr><td><strong>Central_Station</strong></td><td>Stasiun Pusat</td><td>-6.2000</td><td>106.8000</td><td>3 routes</td></tr>
+<tr><td><strong>Mall_Plaza</strong></td><td>Plaza Indonesia</td><td>-6.2200</td><td>106.8200</td><td>2 routes</td></tr>
+<tr><td><strong>University</strong></td><td>Universitas Indonesia</td><td>-6.3600</td><td>106.8300</td><td>2 routes</td></tr>
+</table>
+<h2>🛤️ Network Connection Matrix:</h2>
+<table>
+<tr><th>Origin</th><th>Destination</th><th>Transport Mode</th><th>Distance (m)</th><th>Time (min)</th><th>Cost ($)</th><th>Transfers</th></tr>
+<tr><td>Airport</td><td>Central_Station</td><td><strong>train+bus</strong></td><td>25000.0000</td><td>45.0000</td><td>50000.0000</td><td>1</td></tr>
+<tr><td>Bus_Terminal</td><td>Central_Station</td><td><strong>metro</strong></td><td>1500.0000</td><td>15.0000</td><td>5000.0000</td><td>0</td></tr>
+<tr><td>Bus_Terminal</td><td>Mall_Plaza</td><td><strong>bus</strong></td><td>2000.0000</td><td>20.0000</td><td>3500.0000</td><td>0</td></tr>
+<tr><td>Central_Station</td><td>Bus_Terminal</td><td><strong>metro</strong></td><td>1500.0000</td><td>15.0000</td><td>5000.0000</td><td>0</td></tr>
+<tr><td>Central_Station</td><td>Airport</td><td><strong>train+bus</strong></td><td>25000.0000</td><td>45.0000</td><td>50000.0000</td><td>1</td></tr>
+<tr><td>Central_Station</td><td>University</td><td><strong>train+bus</strong></td><td>12000.0000</td><td>40.0000</td><td>12000.0000</td><td>1</td></tr>
+<tr><td>Mall_Plaza</td><td>Bus_Terminal</td><td><strong>bus</strong></td><td>2000.0000</td><td>20.0000</td><td>3500.0000</td><td>0</td></tr>
+<tr><td>Mall_Plaza</td><td>University</td><td><strong>bus</strong></td><td>8000.0000</td><td>35.0000</td><td>8000.0000</td><td>1</td></tr>
+<tr><td>University</td><td>Mall_Plaza</td><td><strong>bus</strong></td><td>8000.0000</td><td>35.0000</td><td>8000.0000</td><td>1</td></tr>
+<tr><td>University</td><td>Central_Station</td><td><strong>train+bus</strong></td><td>12000.0000</td><td>40.0000</td><td>12000.0000</td><td>1</td></tr>
+</table>
+<div class='info'>
+<h3>💡 Interactive Map Guide:</h3>
+<ul>
+<li><strong>Station Markers (🔵):</strong> Click to see station details and coordinates</li>
+<li><strong>Route Line (🔴):</strong> Click to see complete route information</li>
+<li><strong>Navigation:</strong> Use mouse wheel to zoom, drag to pan</li>
+<li><strong>Sample Route:</strong> Shows optimal path from Central_Station to University</li>
+</ul>
+<p><em>This map demonstrates the Transportation Route Recommendation System's pathfinding capabilities with interactive visualization.</em></p>
+</div>
+</body></html>
