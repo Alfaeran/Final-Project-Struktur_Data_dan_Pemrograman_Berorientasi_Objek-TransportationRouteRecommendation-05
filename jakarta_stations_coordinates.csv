@@ -1,0 +1,107 @@
+// Jakarta Transportation Data with GPS Coordinates - Extended Version
+// Format: station_name,latitude,longitude,area
+
+// TransJakarta BRT Network
+Blok M,-6.2441,106.7991,Jakarta Selatan
+Senayan,-6.2296,106.8025,Jakarta Selatan
+Bundaran HI,-6.1944,106.8230,Jakarta Pusat
+Monas,-6.1751,106.8270,Jakarta Pusat
+Harmoni,-6.1652,106.8133,Jakarta Pusat
+Kota,-6.1375,106.8133,Jakarta Barat
+Pulo Gadung,-6.2030,106.8976,Jakarta Timur
+Kampung Melayu,-6.2369,106.8597,Jakarta Selatan
+Cawang,-6.2419,106.8689,Jakarta Timur
+
+// MRT Jakarta - North-South Line
+Lebak Bulus,-6.2894,106.7747,Jakarta Selatan
+Fatmawati,-6.2741,106.7994,Jakarta Selatan
+Cipete Raya,-6.2658,106.7886,Jakarta Selatan
+Haji Nawi,-6.2530,106.7900,Jakarta Selatan
+Blok A,-6.2469,106.7969,Jakarta Selatan
+Blok M BCA,-6.2441,106.7991,Jakarta Selatan
+ASEAN,-6.2364,106.7969,Jakarta Selatan
+Istora Mandiri,-6.2175,106.8025,Jakarta Pusat
+Bendungan Hilir,-6.2139,106.8178,Jakarta Pusat
+Setiabudi Astra,-6.2139,106.8256,Jakarta Selatan
+Dukuh Atas BNI,-6.2088,106.8230,Jakarta Pusat
+
+// LRT Jakarta - Kelapa Gading Line
+Velodrome,-6.2197,106.8956,Jakarta Timur
+Boulevard Utara,-6.1844,106.8944,Jakarta Timur
+Boulevard Selatan,-6.1925,106.8944,Jakarta Timur
+Pegangsaan Dua,-6.1694,106.8831,Jakarta Utara
+Kelapa Gading,-6.1575,106.9069,Jakarta Utara
+
+// Commuter Line KRL
+Tanah Abang,-6.1833,106.8089,Jakarta Pusat
+Palmerah,-6.2075,106.7900,Jakarta Barat
+Kebayoran,-6.2441,106.7991,Jakarta Selatan
+Sudirman,-6.2088,106.8230,Jakarta Pusat
+Karet,-6.2019,106.8178,Jakarta Pusat
+Gondangdia,-6.1856,106.8342,Jakarta Pusat
+Cikini,-6.1917,106.8419,Jakarta Pusat
+Manggarai,-6.2147,106.8500,Jakarta Selatan
+Tebet,-6.2289,106.8597,Jakarta Selatan
+Cawang,-6.2419,106.8689,Jakarta Timur
+Duren Kalibata,-6.2533,106.8597,Jakarta Selatan
+Pasar Minggu Baru,-6.2847,106.8453,Jakarta Selatan
+Pasar Minggu,-6.2858,106.8456,Jakarta Selatan
+Tanjung Barat,-6.3019,106.8456,Jakarta Selatan
+Lenteng Agung,-6.3294,106.8342,Jakarta Selatan
+Universitas Pancasila,-6.3403,106.8239,Jakarta Selatan
+Universitas Indonesia,-6.3600,106.8300,Depok
+Pondok Cina,-6.3747,106.8342,Depok
+Depok,-6.4025,106.8186,Depok
+Bogor,-6.5950,106.8160,Bogor
+
+// Additional Strategic Locations
+Gambir,-6.1758,106.8289,Jakarta Pusat
+Juanda,-6.1658,106.8306,Jakarta Pusat
+Sawah Besar,-6.1522,106.8322,Jakarta Pusat
+Mangga Besar,-6.1344,106.8339,Jakarta Barat
+Jayakarta,-6.1292,106.8356,Jakarta Barat
+Jakarta Kota,-6.1375,106.8133,Jakarta Barat
+Kampung Bandan,-6.1178,106.8400,Jakarta Utara
+Ancol,-6.1225,106.8417,Jakarta Utara
+Kemayoran,-6.1694,106.8525,Jakarta Pusat
+Gang Sentiong,-6.1583,106.8508,Jakarta Pusat
+Kramat,-6.1750,106.8528,Jakarta Pusat
+Pondok Jati,-6.1886,106.8544,Jakarta Timur
+Jatinegara,-6.2158,106.8706,Jakarta Timur
+Klender,-6.2167,106.9003,Jakarta Timur
+Buaran,-6.2050,106.9156,Jakarta Timur
+Klender Baru,-6.2050,106.9200,Jakarta Timur
+Cakung,-6.1964,106.9456,Jakarta Timur
+Kranji,-6.1811,106.9689,Bekasi
+Bekasi,-6.2383,107.0000,Bekasi
+
+// South Extension
+Pondok Ranji,-6.3050,106.7397,Tangerang Selatan
+Sudimara,-6.3078,106.7428,Tangerang Selatan
+Rawa Buntu,-6.3106,106.7458,Tangerang Selatan
+Serpong,-6.3181,106.7519,Tangerang Selatan
+Cisauk,-6.3294,106.7642,Tangerang Selatan
+Cicayur,-6.3397,106.7742,Tangerang Selatan
+Parung Panjang,-6.3578,106.7869,Bogor
+
+// West Line Extension
+Duri,-6.1703,106.7839,Jakarta Barat
+Grogol,-6.1744,106.7797,Jakarta Barat
+Pesing,-6.1786,106.7756,Jakarta Barat
+Taman Kota,-6.1828,106.7714,Jakarta Barat
+Bojong Indah,-6.1869,106.7672,Jakarta Barat
+Rawa Buaya,-6.1911,106.7631,Jakarta Barat
+Kalideres,-6.1953,106.7589,Jakarta Barat
+Poris,-6.1994,106.7547,Tangerang
+Batu Ceper,-6.2036,106.7506,Tangerang
+Tangerang,-6.2078,106.7464,Tangerang
+
+// Airport Rail Link
+Dukuh Atas,-6.2088,106.8230,Jakarta Pusat
+BNI City,-6.2122,106.8194,Jakarta Pusat
+Sudirman Baru,-6.2156,106.8158,Jakarta Pusat
+Benda,-6.2422,106.7644,Tangerang Selatan
+Batuceper,-6.2036,106.7506,Tangerang
+Soekarno Hatta Airport T3,-6.1366,106.6553,Tangerang
+Soekarno Hatta Airport T2,-6.1256,106.6556,Tangerang
+Soekarno Hatta Airport T1,-6.1250,106.6531,Tangerang

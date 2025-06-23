@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jakarta Transportation Route System - Interactive Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 20px; text-align: center; }
+        .header h1 { margin: 0; font-size: 2em; }
+        .controls { padding: 20px; background: #f8f9fa; border-bottom: 2px solid #e9ecef; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; align-items: end; }
+        .control-group { display: flex; flex-direction: column; }
+        .control-group label { font-weight: bold; margin-bottom: 5px; color: #333; }
+        input, select, button { padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+        button { background: #4CAF50; color: white; border: none; cursor: pointer; transition: background 0.3s; }
+        button:hover { background: #45a049; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #map { height: 600px; width: 100%; border-top: 3px solid #4CAF50; }
+        .info-panel { padding: 20px; background: #f8f9fa; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .stat-box { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #4CAF50; }
+        .route-info { background: white; padding: 20px; border-radius: 10px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,123,255,0.2); border-left: 5px solid #007bff; display: none; }
+        .route-summary { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .route-steps { max-height: 300px; overflow-y: auto; margin: 15px 0; }
+        .route-step { background: #f8f9fa; padding: 12px; margin: 8px 0; border-radius: 6px; border-left: 4px solid #007bff; }
+        .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .step-details { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 12px; }
+        .detail-item { text-align: center; padding: 5px; background: white; border-radius: 4px; }
+        .loading { display: none; text-align: center; padding: 20px; color: #007bff; }
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .connection-info { background: #fff3e0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ff9800; display: none; }
+        .search-box { position: relative; }
+        .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; z-index: 1000; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .search-option { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+        .search-option:hover { background: #f8f9fa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Jakarta Transportation Route System</h1>
+            <p>Interactive Map with Advanced Route Finding</p>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label>From Station:</label>
+                <div class="search-box">
+                    <input type="text" id="startSearch" placeholder="Search start station...">
+                    <select id="startSelect">
+                        <option value="">Select start station...</option>
+                    </select>
+                    <div id="startDropdown" class="search-dropdown"></div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label>To Station:</label>
+                <div class="search-box">
+                    <input type="text" id="endSearch" placeholder="Search destination...">
+                    <select id="endSelect">
+                        <option value="">Select destination...</option>
+                    </select>
+                    <div id="endDropdown" class="search-dropdown"></div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label>Optimize for:</label>
+                <select id="criteriaSelect">
+                    <option value="time">Fastest Time</option>
+                    <option value="distance">Shortest Distance</option>
+                    <option value="cost">Lowest Cost</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button id="findRouteBtn" onclick="findRoute()">Find Route</button>
+                <button onclick="clearRoute()">Clear</button>
+            </div>
+        </div>
+        
+        <div id="map"></div>
+        
+        <div class="info-panel">
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="totalStations">-</div>
+                    <div>Total Stations</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="totalConnections">-</div>
+                    <div>Network Connections</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="networkStatus">Loading...</div>
+                    <div>Network Status</div>
+                </div>
+            </div>
+            
+            <div id="connectionInfo" class="connection-info">
+                <h4>Station Connections</h4>
+                <p>Click on any station marker to see its connections</p>
+                <div id="connectionDetails"></div>
+            </div>
+            
+            <div id="routeInfo" class="route-info">
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Calculating optimal route...</p>
+                </div>
+                <div id="routeDetails"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let map;
+        let stations = {};
+        let networkGraph = {};
+        let routeLayer = null;
+        let routeMarkers = [];
+        let connectionMarkers = [];
+        let stationMarkers = {};
+        
+        // Initialize map
+        function initMap() {
+            map = L.map('map').setView([-6.2088, 106.8456], 11);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+        }
+          // Load network data
+        async function loadNetworkData() {
+            try {
+                // Try to load CSV files first
+                const stationsResponse = await fetch('nodes_data.csv');
+                if (!stationsResponse.ok) throw new Error('CSV file not found');
+                
+                const stationsText = await stationsResponse.text();
+                parseStationsData(stationsText);
+                
+                const networkResponse = await fetch('network_data.csv');
+                const networkText = await networkResponse.text();
+                parseNetworkData(networkText);
+                
+                console.log('Successfully loaded CSV data');
+                
+            } catch (error) {
+                console.warn('CSV files not available, using fallback data:', error);
+                loadFallbackData();
+            }
+            
+            populateStationSelects();
+            addStationMarkers();
+            updateStats();
+            initSearchFeature();
+        }
+        
+        // Fallback data when CSV files are not available
+        function loadFallbackData() {
+            // Sample Jakarta stations data
+            stations = {
+                "1": { name: "Blok M", lat: -6.2441, lon: 106.7991, area: "Jakarta Selatan" },
+                "2": { name: "Bundaran HI", lat: -6.1944, lon: 106.8229, area: "Jakarta Pusat" },
+                "3": { name: "Harmoni", lat: -6.1652, lon: 106.8172, area: "Jakarta Pusat" },
+                "4": { name: "Monas", lat: -6.1754, lon: 106.8272, area: "Jakarta Pusat" },
+                "5": { name: "Gambir", lat: -6.1664, lon: 106.8310, area: "Jakarta Pusat" },
+                "6": { name: "Kota", lat: -6.1372, lon: 106.8129, area: "Jakarta Barat" },
+                "7": { name: "Senayan", lat: -6.2269, lon: 106.8019, area: "Jakarta Selatan" },
+                "8": { name: "Dukuh Atas", lat: -6.2078, lon: 106.8230, area: "Jakarta Selatan" },
+                "9": { name: "Tanah Abang", lat: -6.1865, lon: 106.8107, area: "Jakarta Pusat" },
+                "10": { name: "Kemayoran", lat: -6.1673, lon: 106.8442, area: "Jakarta Pusat" }
+            };
+            
+            // Sample network connections
+            networkGraph = {
+                "1": [
+                    { to: "2", distance: 5.2, time: 15, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "7", distance: 2.1, time: 8, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "2": [
+                    { to: "1", distance: 5.2, time: 15, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "3", distance: 1.8, time: 6, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "4", distance: 1.2, time: 4, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "3": [
+                    { to: "2", distance: 1.8, time: 6, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "6", distance: 3.5, time: 12, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "9", distance: 2.2, time: 8, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "4": [
+                    { to: "2", distance: 1.2, time: 4, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "5", distance: 1.5, time: 5, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "5": [
+                    { to: "4", distance: 1.5, time: 5, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "8", distance: 4.2, time: 20, cost: 5000, transfers: 1, mode: "KRL" }
+                ],
+                "6": [
+                    { to: "3", distance: 3.5, time: 12, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "7": [
+                    { to: "1", distance: 2.1, time: 8, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "8", distance: 1.8, time: 6, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "8": [
+                    { to: "7", distance: 1.8, time: 6, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "5", distance: 4.2, time: 20, cost: 5000, transfers: 1, mode: "KRL" },
+                    { to: "9", distance: 2.5, time: 10, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "9": [
+                    { to: "3", distance: 2.2, time: 8, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "8", distance: 2.5, time: 10, cost: 3500, transfers: 0, mode: "TransJakarta" },
+                    { to: "10", distance: 3.8, time: 15, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ],
+                "10": [
+                    { to: "9", distance: 3.8, time: 15, cost: 3500, transfers: 0, mode: "TransJakarta" }
+                ]
+            };
+        }
+        
+        // Parse stations data
+        function parseStationsData(csvText) {
+            const lines = csvText.trim().split('\n');
+            for (let i = 1; i < lines.length; i++) {
+                const [id, name, lat, lon, area] = lines[i].split(',');
+                if (id && lat && lon) {
+                    stations[id] = {
+                        name: name,
+                        lat: parseFloat(lat),
+                        lon: parseFloat(lon),
+                        area: area || ''
+                    };
+                }
+            }
+        }
+        
+        // Parse network data
+        function parseNetworkData(csvText) {
+            const lines = csvText.trim().split('\n');
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 5) {
+                    const [from, to, distance, time, cost, transfers, mode] = parts;
+                    
+                    if (!networkGraph[from]) networkGraph[from] = [];
+                    
+                    networkGraph[from].push({
+                        to: to,
+                        distance: parseFloat(distance) || 0,
+                        time: parseFloat(time) || 0,
+                        cost: parseFloat(cost) || 0,
+                        transfers: parseInt(transfers) || 0,
+                        mode: mode || 'Unknown'
+                    });
+                }
+            }
+        }
+        
+        // Add station markers to map
+        function addStationMarkers() {
+            for (let stationId in stations) {
+                const station = stations[stationId];
+                const marker = L.circleMarker([station.lat, station.lon], {
+                    radius: 6,
+                    fillColor: '#4CAF50',
+                    color: 'white',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+                
+                marker.bindPopup(`<strong>${stationId}</strong><br>${station.name}<br><small>Click to see connections</small>`);
+                
+                // Add click event to show connections
+                marker.on('click', function() {
+                    showStationConnections(stationId);
+                });
+                
+                stationMarkers[stationId] = marker;
+            }
+        }
+        
+        // Show station connections when clicked
+        function showStationConnections(stationId) {
+            clearConnections();
+            
+            const station = stations[stationId];
+            const connections = networkGraph[stationId] || [];
+            
+            if (connections.length === 0) {
+                document.getElementById('connectionInfo').style.display = 'block';
+                document.getElementById('connectionDetails').innerHTML = `
+                    <p><strong>${stationId}</strong> has no outgoing connections in the network.</p>
+                `;
+                return;
+            }
+            
+            // Highlight selected station
+            if (stationMarkers[stationId]) {
+                stationMarkers[stationId].setStyle({
+                    radius: 10,
+                    fillColor: '#ff4444',
+                    color: 'white',
+                    weight: 3
+                });
+            }
+            
+            // Draw connection lines and highlight connected stations
+            connections.forEach(conn => {
+                if (stations[conn.to]) {
+                    // Draw line
+                    const line = L.polyline([
+                        [station.lat, station.lon],
+                        [stations[conn.to].lat, stations[conn.to].lon]
+                    ], {
+                        color: '#2196F3',
+                        weight: 3,
+                        opacity: 0.7,
+                        dashArray: '5, 5'
+                    }).addTo(map);
+                    
+                    connectionMarkers.push(line);
+                    
+                    // Highlight connected station
+                    if (stationMarkers[conn.to]) {
+                        stationMarkers[conn.to].setStyle({
+                            radius: 8,
+                            fillColor: '#2196F3',
+                            color: 'white',
+                            weight: 2
+                        });
+                    }
+                }
+            });
+            
+            // Show connection details
+            let connectionsHtml = `
+                <p><strong>${stationId}</strong> connects to <strong>${connections.length}</strong> stations:</p>
+                <div style="max-height: 200px; overflow-y: auto;">
+            `;
+            
+            connections.forEach(conn => {
+                const distanceText = conn.distance >= 1000 ? 
+                    `${(conn.distance/1000).toFixed(1)} km` : `${conn.distance} m`;
+                const costText = conn.cost === 0 ? 'Free' : `Rp ${conn.cost.toLocaleString()}`;
+                const timeText = conn.time >= 60 ? 
+                    `${Math.floor(conn.time/60)}h ${conn.time%60}m` : `${conn.time} min`;
+                
+                connectionsHtml += `
+                    <div style="background: white; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 3px solid #2196F3;">
+                        <strong>${conn.to}</strong><br>
+                        <small style="color: #666;">${stations[conn.to]?.name || 'Unknown'}</small><br>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 5px; font-size: 11px;">
+                            <div style="text-align: center;">${distanceText}</div>
+                            <div style="text-align: center;">⏱️ ${timeText}</div>
+                            <div style="text-align: center;">💰 ${costText}</div>
+                            <div style="text-align: center;">${conn.mode}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            connectionsHtml += '</div>';
+            
+            document.getElementById('connectionInfo').style.display = 'block';
+            document.getElementById('connectionDetails').innerHTML = connectionsHtml;
+        }
+        
+        // Clear connection visualization
+        function clearConnections() {
+            // Remove connection lines
+            connectionMarkers.forEach(marker => {
+                map.removeLayer(marker);
+            });
+            connectionMarkers = [];
+            
+            // Reset station marker styles
+            for (let stationId in stationMarkers) {
+                stationMarkers[stationId].setStyle({
+                    radius: 6,
+                    fillColor: '#4CAF50',
+                    color: 'white',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+            }
+            
+            document.getElementById('connectionInfo').style.display = 'none';
+        }
+        
+        // Populate station select dropdowns
+        function populateStationSelects() {
+            const startSelect = document.getElementById('startSelect');
+            const endSelect = document.getElementById('endSelect');
+            
+            // Clear existing options
+            startSelect.innerHTML = '<option value="">Select start station...</option>';
+            endSelect.innerHTML = '<option value="">Select destination...</option>';
+            
+            // Sort stations alphabetically
+            const sortedStations = Object.keys(stations).sort();
+            
+            sortedStations.forEach(stationId => {
+                const option1 = new Option(`${stationId} - ${stations[stationId].name}`, stationId);
+                const option2 = new Option(`${stationId} - ${stations[stationId].name}`, stationId);
+                startSelect.add(option1);
+                endSelect.add(option2);
+            });
+        }
+        
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalStations').textContent = Object.keys(stations).length;
+            document.getElementById('totalConnections').textContent = Object.keys(networkGraph).reduce((sum, key) => sum + networkGraph[key].length, 0);
+            document.getElementById('networkStatus').textContent = 'Connected';
+        }
+        
+        // Enhanced Dijkstra algorithm with step tracking
+        function dijkstra(start, end, criteria) {
+            console.log(`Finding route from ${start} to ${end} optimizing for ${criteria}`);
+            
+            if (!networkGraph[start] || !stations[end]) {
+                console.log('Start or end station not found in network');
+                return null;
+            }
+            
+            const distances = {};
+            const previous = {};
+            const edgeDetails = {}; // Store edge details for reconstruction
+            const visited = new Set();
+            const unvisited = new Set();
+            
+            // Initialize distances
+            for (let node in stations) {
+                distances[node] = Infinity;
+                previous[node] = null;
+                edgeDetails[node] = null;
+                unvisited.add(node);
+            }
+            distances[start] = 0;
+            
+            while (unvisited.size > 0) {
+                // Find unvisited node with minimum distance
+                let current = null;
+                let minDistance = Infinity;
+                for (let node of unvisited) {
+                    if (distances[node] < minDistance) {
+                        minDistance = distances[node];
+                        current = node;
+                    }
+                }
+                
+                if (current === null || distances[current] === Infinity) break;
+                if (current === end) break;
+                
+                unvisited.delete(current);
+                visited.add(current);
+                
+                // Check neighbors
+                if (networkGraph[current]) {
+                    for (let edge of networkGraph[current]) {
+                        if (!visited.has(edge.to)) {
+                            let weight;
+                            switch (criteria) {
+                                case 'time': weight = edge.time; break;
+                                case 'distance': weight = edge.distance; break;
+                                case 'cost': weight = edge.cost; break;
+                                default: weight = edge.time;
+                            }
+                            
+                            const alt = distances[current] + weight;
+                            if (alt < distances[edge.to]) {
+                                distances[edge.to] = alt;
+                                previous[edge.to] = current;
+                                edgeDetails[edge.to] = edge; // Store the edge details
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Reconstruct path with step details
+            if (distances[end] === Infinity) {
+                console.log('No path found');
+                return null;
+            }
+            
+            const path = [];
+            const stepDetails = [];
+            let current = end;
+            
+            while (current !== null) {
+                path.unshift(current);
+                if (edgeDetails[current]) {
+                    stepDetails.unshift(edgeDetails[current]);
+                }
+                current = previous[current];
+            }
+            
+            console.log('Path found:', path);
+            console.log('Step details:', stepDetails);
+            
+            return {
+                path: path,
+                stepDetails: stepDetails,
+                totalDistance: distances[end],
+                criteria: criteria
+            };
+        }
+        
+        // Find route function
+        function findRoute() {
+            const start = document.getElementById('startSelect').value;
+            const end = document.getElementById('endSelect').value;
+            const criteria = document.getElementById('criteriaSelect').value;
+            
+            if (!start || !end) {
+                alert('Please select both start and destination stations.');
+                return;
+            }
+            
+            if (start === end) {
+                alert('Start and destination cannot be the same.');
+                return;
+            }
+            
+            clearRoute();
+            clearConnections();
+            
+            // Show loading
+            document.getElementById('routeInfo').style.display = 'block';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('routeDetails').innerHTML = '';
+            
+            // Calculate route
+            setTimeout(() => {
+                const result = dijkstra(start, end, criteria);
+                document.getElementById('loading').style.display = 'none';
+                
+                if (result) {
+                    displayRoute(result, start, end);
+                } else {
+                    displayNoRoute(start, end);
+                }
+            }, 500);
+        }
+        
+        // Display route results
+        function displayRoute(result, start, end) {
+            const routeCoords = [];
+            
+            // Get coordinates for each station in path
+            for (let stationId of result.path) {
+                if (stations[stationId]) {
+                    routeCoords.push([stations[stationId].lat, stations[stationId].lon]);
+                }
+            }
+            
+            if (routeCoords.length > 1) {
+                // Draw route on map
+                routeLayer = L.polyline(routeCoords, {
+                    color: '#ff4444',
+                    weight: 6,
+                    opacity: 0.8
+                }).addTo(map);
+                
+                // Add start marker
+                const startMarker = L.marker([routeCoords[0][0], routeCoords[0][1]], {
+                    icon: L.divIcon({
+                        className: 'route-marker',
+                        html: '<div style="background-color: #4CAF50; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.5);"></div>',
+                        iconSize: [20, 20], iconAnchor: [10, 10]
+                    })
+                }).addTo(map).bindPopup(`<strong>START</strong><br>${start}`);
+                
+                // Add end marker
+                const endMarker = L.marker([routeCoords[routeCoords.length-1][0], routeCoords[routeCoords.length-1][1]], {
+                    icon: L.divIcon({
+                        className: 'route-marker',
+                        html: '<div style="background-color: #f44336; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.5);"></div>',
+                        iconSize: [20, 20], iconAnchor: [10, 10]
+                    })
+                }).addTo(map).bindPopup(`<strong>DESTINATION</strong><br>${end}`);
+                
+                routeMarkers.push(startMarker, endMarker);
+                
+                // Fit map to route
+                map.fitBounds(routeLayer.getBounds(), { padding: [20, 20] });
+                
+                // Display route details
+                displayRouteDetails(result, start, end);
+            }
+        }
+        
+        // Display detailed route information
+        function displayRouteDetails(result, start, end) {
+            // Calculate totals
+            let totalCost = 0, totalTime = 0, totalDistance = 0, totalTransfers = 0;
+            
+            result.stepDetails.forEach(step => {
+                totalCost += step.cost;
+                totalTime += step.time;
+                totalDistance += step.distance;
+                totalTransfers += step.transfers;
+            });
+            
+            // Format totals
+            const totalDistanceText = totalDistance >= 1000 ? 
+                `${(totalDistance/1000).toFixed(1)} km` : `${totalDistance} m`;
+            const totalCostText = totalCost === 0 ? 'Free' : `Rp ${totalCost.toLocaleString()}`;
+            const totalTimeText = totalTime >= 60 ? 
+                `${Math.floor(totalTime/60)}h ${totalTime%60}m` : `${totalTime} min`;
+            
+            const criteriaText = result.criteria === 'time' ? 'Fastest Time' : 
+                               result.criteria === 'distance' ? 'Shortest Distance' : 'Lowest Cost';
+            
+            // Build HTML
+            let html = `
+                <h3>Route: ${start} → ${end}</h3>
+                
+                <div class="route-summary">
+                    <strong>Optimization:</strong> ${criteriaText}<br>
+                    <strong>Total Stations:</strong> ${result.path.length}<br>
+                    <strong>Route Segments:</strong> ${result.stepDetails.length}
+                    
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 15px;">
+                        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #ff5722;">${totalDistanceText}</div>
+                            <div style="font-size: 12px;">Total Distance</div>
+                        </div>
+                        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #4CAF50;">${totalTimeText}</div>
+                            <div style="font-size: 12px;">Total Time</div>
+                        </div>
+                        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #9C27B0;">${totalCostText}</div>
+                            <div style="font-size: 12px;">Total Cost</div>
+                        </div>
+                        <div style="text-align: center; background: white; padding: 10px; border-radius: 5px;">
+                            <div style="font-size: 18px; font-weight: bold; color: #FF9800;">${totalTransfers}</div>
+                            <div style="font-size: 12px;">Transfers</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="route-steps">
+                    <h4>🗺️ Step-by-Step Route:</h4>
+            `;
+            
+            // Add start station
+            html += `
+                <div class="route-step" style="border-left-color: #4CAF50;">
+                    <div class="step-header">
+                        <strong>START: ${start}</strong>
+                        <span style="color: #4CAF50;">Journey begins</span>
+                    </div>
+                    <small>${stations[start]?.name}</small>
+                </div>
+            `;
+            
+            // Add each step
+            result.stepDetails.forEach((step, index) => {
+                const toStation = result.path[index + 1];
+                const stepNum = index + 1;
+                
+                const distanceText = step.distance >= 1000 ? 
+                    `${(step.distance/1000).toFixed(1)} km` : `${step.distance} m`;
+                const costText = step.cost === 0 ? 'Free' : `Rp ${step.cost.toLocaleString()}`;
+                const timeText = step.time >= 60 ? 
+                    `${Math.floor(step.time/60)}h ${step.time%60}m` : `${step.time} min`;
+                
+                html += `
+                    <div class="route-step">
+                        <div class="step-header">
+                            <strong>Step ${stepNum}: ${toStation}</strong>
+                            <span style="color: #2196F3;">${step.mode}</span>
+                        </div>
+                        <small style="color: #666;">${stations[toStation]?.name}</small>
+                        <div class="step-details">
+                            <div class="detail-item">
+                                <div style="color: #ff5722; font-weight: bold;">${distanceText}</div>
+                                <div>Distance</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="color: #4CAF50; font-weight: bold;">${timeText}</div>
+                                <div>Time</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="color: #9C27B0; font-weight: bold;">${costText}</div>
+                                <div>Cost</div>
+                            </div>
+                            <div class="detail-item">
+                                <div style="color: #FF9800; font-weight: bold;">${step.transfers}</div>
+                                <div>Transfers</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Add destination
+            html += `
+                <div class="route-step" style="border-left-color: #f44336;">
+                    <div class="step-header">
+                        <strong>DESTINATION: ${end}</strong>
+                        <span style="color: #f44336;">Journey ends</span>
+                    </div>
+                    <small>${stations[end]?.name}</small>
+                </div>
+            `;
+            
+            html += '</div>';
+            
+            document.getElementById('routeDetails').innerHTML = html;
+        }
+        
+        // Display no route found
+        function displayNoRoute(start, end) {
+            const html = `
+                <div style="text-align: center; padding: 20px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">🚫</div>
+                    <h3 style="color: #f44336;">No Route Found</h3>
+                    <p>Unable to find a route from <strong>${start}</strong> to <strong>${end}</strong></p>
+                    <p style="color: #666; margin-top: 15px;">
+                        Try clicking on station markers to see available connections, or choose different stations.
+                    </p>
+                </div>
+            `;
+            document.getElementById('routeDetails').innerHTML = html;
+        }
+        
+        // Clear route visualization
+        function clearRoute() {
+            if (routeLayer) {
+                map.removeLayer(routeLayer);
+                routeLayer = null;
+            }
+            
+            routeMarkers.forEach(marker => {
+                map.removeLayer(marker);
+            });
+            routeMarkers = [];
+            
+            document.getElementById('routeInfo').style.display = 'none';
+        }
+        
+        // Search functionality
+        function initSearchFeature() {
+            addSearchToInput('startSearch', 'startSelect', 'startDropdown');
+            addSearchToInput('endSearch', 'endSelect', 'endDropdown');
+        }
+        
+        function addSearchToInput(inputId, selectId, dropdownId) {
+            const input = document.getElementById(inputId);
+            const select = document.getElementById(selectId);
+            const dropdown = document.getElementById(dropdownId);
+            
+            input.addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                filterStations(query, dropdown, select);
+            });
+            
+            input.addEventListener('focus', function() {
+                if (this.value === '') {
+                    filterStations('', dropdown, select);
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        }
+        
+        function filterStations(query, dropdown, select) {
+            dropdown.innerHTML = '';
+            dropdown.style.display = 'none';
+            
+            const filteredStations = [];
+            
+            for (let stationId in stations) {
+                const station = stations[stationId];
+                const matchId = stationId.toLowerCase().includes(query);
+                const matchName = station.name.toLowerCase().includes(query);
+                
+                if (query === '' || matchId || matchName) {
+                    filteredStations.push({
+                        id: stationId,
+                        name: station.name,
+                        relevance: matchId ? 2 : (matchName ? 1 : 0)
+                    });
+                }
+            }
+            
+            filteredStations.sort((a, b) => {
+                if (a.relevance !== b.relevance) return b.relevance - a.relevance;
+                return a.id.localeCompare(b.id);
+            });
+            
+            const maxResults = Math.min(8, filteredStations.length);
+            
+            if (maxResults > 0) {
+                dropdown.style.display = 'block';
+                
+                for (let i = 0; i < maxResults; i++) {
+                    const station = filteredStations[i];
+                    const option = document.createElement('div');
+                    option.className = 'search-option';
+                    option.innerHTML = `<strong>${station.id}</strong><br><small style="color: #666;">${station.name}</small>`;
+                    
+                    option.addEventListener('click', function() {
+                        select.value = station.id;
+                        document.getElementById(dropdown.id.replace('Dropdown', 'Search')).value = station.id;
+                        dropdown.style.display = 'none';
+                    });
+                    
+                    dropdown.appendChild(option);
+                }
+            }
+        }
+        
+        // Initialize everything when page loads
+        window.onload = function() {
+            initMap();
+            loadNetworkData();
+        };
+    </script>
+</body>
+</html>

@@ -1,192 +1,195 @@
-# 🚌 Transportation Route Recommendation System
-
-> **Final Project - Data Structures & Object-Oriented Programming**  
-> ET234203 - 2024/2025
+# Transportation Route Recommendation System
+## Final Project - Data Structures & Object-Oriented Programming
+### ET234203 - 2024/2025
 
 ---
 
-## 🚀 **Quick Start Guide**
+## 📁 Project Structure
 
-### **🌟 Standalone Version (Recommended for Quick Demo)**
+```
+Final-Project-Struktur_Data_dan_Pemrograman_Berorientasi_Objek-TransportationRouteRecommendation-05/
+├── src/                          # Source code files
+│   ├── standalone_transport_system.cpp  # Main application (CLEAN VERSION)
+│   ├── algorithms/               # Algorithm implementations
+│   ├── core/                     # Core data structures
+│   ├── io/                       # Input/Output handlers
+│   ├── ui/                       # User interface components
+│   └── utils/                    # Utility functions
+├── data/                         # Data files
+│   ├── jakarta_stations_coordinates.csv  # Station coordinates
+│   ├── network_data.csv          # Generated network data
+│   ├── nodes_data.csv           # Generated nodes data
+│   ├── current_route.csv        # Current route data
+│   ├── sample_data/             # Sample datasets
+│   └── templates/               # Data templates
+├── demo/                         # Demo and visualization files
+│   ├── jakarta_current_map.html  # Interactive map visualization
+│   └── screenshots/             # Demo screenshots
+├── docs/                         # Documentation
+├── tests/                        # Test files
+├── scripts/                      # Build and utility scripts
+├── include/                      # Header files
+├── config/                       # Configuration files
+├── build/                        # Compiled executables (generated)
+├── obj/                          # Object files (generated)
+└── bin/                          # Binary files (generated)
+```
 
-**Complete system in ONE file - ready to compile and run:**
+---
 
+## 🚀 Quick Start
+
+### 1. Build the Application
 ```bash
-# Clone repository
-git clone [repository-url]
-cd Final-Project-Struktur_Data_dan_Pemrograman_Berorientasi_Objek-TransportationRouteRecommendation-05
+# Method 1: Using build script (Windows)
+build.bat
 
-# Build & Run Standalone (One Click!)
-.\build_standalone.bat
-
-# Or manual build:
-g++ -std=c++17 standalone_transport_system.cpp -o TransportApp_Standalone.exe
+# Method 2: Manual compilation
+g++ -std=c++17 src/standalone_transport_system.cpp -o build/TransportApp.exe
 ```
 
-**✨ Standalone Features:**
-- ✅ **Complete system in ONE file** (1000+ lines of C++)
-- ✅ **Zero dependencies** - just compile and run
-- ✅ **Dijkstra algorithm** with priority queue implementation
-- ✅ **Interactive menu system** with EOF handling
-- ✅ **Network visualization** (ASCII graph display)
-- ✅ **Built-in testing suite** (5 comprehensive tests)
-- ✅ **Map generation** (HTML + CSV export)
-- ✅ **CRUD operations** (add/edit nodes and edges)
-- ✅ **Multi-criteria optimization** (time, distance, cost, transfers)
-
-### **📁 Full Project Version (For Development)**
-
-**For complete modular development:**
-
+### 2. Run the Application
 ```bash
-# Build full interactive system
-.\build_interactive.bat
+# Method 1: Using run script (Windows)
+run.bat
 
-# Program will automatically build and start!
+# Method 2: Manual execution
+cd build
+./TransportApp.exe
 ```
 
----
-
-## 📖 **Documentation**
-
-### **Quick References:**
-- **[STANDALONE_GUIDE.md](docs/STANDALONE_GUIDE.md)** - Complete standalone version guide
-- **[QUICK_START.md](docs/QUICK_START.md)** - Ultra-quick setup (Bahasa Indonesia)
-- **[PANDUAN.md](docs/PANDUAN.md)** - Detailed installation guide
-
-### **Project Structure:**
-```
-├── standalone_transport_system.cpp  # ⭐ MAIN FILE (Complete system)
-├── build_standalone.bat            # 🔧 One-click build script
-├── README.md                       # 📖 This file
-├── docs/                           # 📚 All documentation
-└── bin/                            # 📦 Output executables
-```
+### 3. View Interactive Map
+1. Run the application
+2. Choose option 6 to generate map data
+3. Open `demo/jakarta_current_map.html` in your web browser
 
 ---
 
-## 🎮 **Demo Usage**
+## ✨ Features
 
-### **Standalone Version Demo:**
-1. **Run:** `.\build_standalone.bat`
-2. **Menu 1:** Show network graph visualization
-3. **Menu 2:** Find route (Dijkstra pathfinding demo)
-4. **Menu 5:** Run system tests (should be 100% passed)
-5. **Menu 6:** Generate HTML map + CSV data
-6. **Menu 7:** Exit
-
-### **Generated Files:**
-- `jakarta_map_simple.html` - Interactive Jakarta transportation map
-- `network_data.csv` - Exportable network data
-- `TransportApp_Standalone.exe` - Self-contained executable
+- **🗺️ Interactive Map Visualization**: Real-time map updates with Jakarta transportation network
+- **🔍 Route Finding**: Dijkstra algorithm implementation with multiple optimization criteria
+- **📊 Network Management**: CRUD operations for nodes and edges
+- **📈 System Testing**: Built-in test suite for validation
+- **💾 Data Export**: CSV export for network analysis
+- **🎯 Multiple Criteria**: Optimize by time, distance, cost, or transfers
 
 ---
 
-## 🔧 **Technical Highlights**
+## 🛠️ Technical Details
 
-### **Algorithms Implemented:**
-- **Dijkstra's Algorithm** - Shortest path with priority queue
-- **Haversine Formula** - GPS distance calculation
-- **Depth-First Search** - Network connectivity analysis
-- **Multi-Criteria Optimization** - Weighted path selection
+### Core Technologies
+- **Language**: C++17
+- **Data Structures**: Graph (Adjacency List), Priority Queue
+- **Algorithms**: Dijkstra's Shortest Path
+- **Visualization**: HTML5, JavaScript, Leaflet Maps
+- **Build System**: GCC/MinGW, CMake support
 
-### **Data Structures:**
-- **Graph** - Adjacency list representation
-- **Priority Queue** - Efficient pathfinding
-- **Hash Maps** - Fast node/edge lookup
-- **Vector/String** - Dynamic data management
-
-### **OOP Principles:**
-- **Encapsulation** - Clean class interfaces
-- **Abstraction** - Separated concerns (Graph, PathFinder, UI)
-- **Modularity** - Reusable components
-- **Error Handling** - Robust input validation
+### Key Components
+1. **Graph Class**: Manages transportation network
+2. **PathFinder Class**: Implements Dijkstra algorithm
+3. **TransportApp Class**: Main application interface
+4. **Interactive Map**: Real-time visualization
 
 ---
 
-## 🧪 **Testing & Validation**
+## 📋 Usage Guide
 
-### **Built-in Test Suite:**
+### Menu Options:
+1. **Show Network Graph**: Display current network structure
+2. **Find Route**: Calculate optimal routes using Dijkstra
+3. **Add New Node**: Add stations to the network
+4. **Add New Edge**: Add connections between stations
+5. **Run System Tests**: Validate system functionality
+6. **Generate Interactive Map**: Create/update visualization
+7. **Exit**: Close application
+
+### Optimization Criteria:
+- **Time**: Fastest route (minutes)
+- **Distance**: Shortest route (meters)
+- **Cost**: Cheapest route (currency)
+- **Transfers**: Fewest transfers (count)
+
+---
+
+## 🧪 Testing
+
+The system includes comprehensive tests:
+- Graph connectivity validation
+- Minimum node/edge requirements
+- Route finding accuracy
+- Multiple criteria optimization
+- System integration tests
+
+---
+
+## 📁 File Descriptions
+
+### Source Files
+- `src/standalone_transport_system.cpp`: **Main application** (emoji-free, clean version)
+- `src/algorithms/`: Algorithm implementations
+- `src/core/`: Core data structures (Node, Edge, Graph)
+- `src/io/`: File I/O handlers
+
+### Data Files
+- `data/jakarta_stations_coordinates.csv`: Real Jakarta station coordinates
+- `data/sample_data/jakarta.csv`: Jakarta transportation network data
+- `data/network_data.csv`: Generated network export
+- `data/current_route.csv`: Current route for map visualization
+
+### Generated Files
+- `build/TransportApp.exe`: Compiled application
+- `demo/jakarta_current_map.html`: Interactive map visualization
+- Various CSV exports for data analysis
+
+---
+
+## 🔧 Build Instructions
+
+### Prerequisites
+- GCC/MinGW with C++17 support
+- Web browser (for map visualization)
+
+### Compilation
 ```bash
-# From menu, select option 5:
-5. Run System Tests
+# Standard build
+g++ -std=c++17 src/standalone_transport_system.cpp -o build/TransportApp.exe
 
-# All tests should pass:
-✅ Graph Connectivity: PASSED
-✅ Minimum Nodes (>=5): PASSED  
-✅ Minimum Edges (>=5): PASSED
-✅ Route Finding: PASSED
-✅ Multiple Criteria: PASSED
-Success Rate: 100%
-```
-
-### **Demo Data:**
-- **5 Jakarta Stations:** Central_Station, Bus_Terminal, Airport, Mall_Plaza, University
-- **10 Connections:** Various transport modes (metro, bus, train+bus)
-- **Real GPS Coordinates:** Actual Jakarta locations
-
----
-
-## 🚨 **Troubleshooting**
-
-### **"g++ is not recognized"**
-```bash
-# Install MinGW-w64 and add to PATH
-# Download: https://www.mingw-w64.org/downloads/
-```
-
-### **Build fails**
-```bash
-# Make sure file exists
-dir standalone_transport_system.cpp
-
-# Try with explicit flags
-g++ -std=c++17 -I. standalone_transport_system.cpp -o app.exe
-```
-
-### **For detailed solutions:** See [docs/PANDUAN.md](docs/PANDUAN.md)
-
----
-
-## 🎯 **Why Standalone Version?**
-
-### **Perfect for:**
-- 🎓 **Academic Presentations** - Quick demo setup
-- 👥 **Team Sharing** - Send one file to teammates  
-- 🧪 **Code Review** - Complete implementation in one place
-- 📚 **Learning** - Study full system architecture
-- 🚀 **Portability** - Run on any machine with g++
-
-### **Academic Goals Achieved:**
-- ✅ **Data Structures:** Graph, Priority Queue, Hash Maps
-- ✅ **Algorithms:** Dijkstra, DFS, Haversine, Multi-criteria
-- ✅ **OOP Principles:** Encapsulation, Abstraction, Modularity
-- ✅ **Software Engineering:** Testing, Documentation, Error Handling
-- ✅ **System Integration:** File I/O, User Interface, Visualization
-
----
-
-## 💡 **Quick Commands Reference**
-
-```bash
-# 🌟 Standalone version (recommended)
-.\build_standalone.bat                    # One-click build & run
-g++ -std=c++17 standalone_transport_system.cpp -o app.exe  # Manual build
-
-# 📁 Full project version  
-.\build_interactive.bat                   # Full system build
-.\cleanup_project.bat                     # Clean up unnecessary files
-
-# 🧪 Testing
-echo "5" | .\TransportApp_Standalone.exe # Quick test run
+# With optimizations
+g++ -std=c++17 -O2 src/standalone_transport_system.cpp -o build/TransportApp.exe
 ```
 
 ---
 
-## 🎉 **Ready to Explore Jakarta's Transportation Network!**
+## 🎯 Project Goals Achieved
 
-**The standalone version delivers a complete, professional transportation system in a single file - perfect for academic presentations and rapid deployment! 🚇🚌🚊**
+✅ **Data Structures**: Graph implementation with adjacency list  
+✅ **Object-Oriented Design**: Classes for Node, Edge, Graph, PathFinder  
+✅ **Algorithm Implementation**: Dijkstra's shortest path algorithm  
+✅ **CRUD Operations**: Complete Create, Read, Update, Delete functionality  
+✅ **File I/O**: CSV import/export capabilities  
+✅ **Interactive Visualization**: Real-time map updates  
+✅ **Multiple Criteria**: Time, distance, cost, transfer optimization  
+✅ **System Testing**: Comprehensive test suite  
+✅ **Documentation**: Complete project documentation  
 
 ---
 
-*Made with ❤️ for Advanced Data Structures and Object-Oriented Programming Course*
+## 📝 Notes
+
+- **Clean Console Output**: All emoji characters removed for compatibility
+- **Real Data**: Uses actual Jakarta transportation coordinates
+- **Interactive Map**: Live updates from C++ application
+- **Academic Ready**: Prepared for demonstration and evaluation
+- **Cross-Platform**: Compatible with Windows/Linux/macOS
+
+---
+
+## 👥 Development Team
+
+**Final Project - ET234203 Data Structures & Object-Oriented Programming**  
+**Academic Year: 2024/2025**
+
+---
+
+*This project demonstrates advanced data structures, algorithm implementation, and interactive visualization in C++.*

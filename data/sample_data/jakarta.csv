@@ -1,110 +1,308 @@
 source,destination,distance_m,time_min,cost_idr,transit
-Terminal Pulogadung,Kota,15000,45,3500,0
-Kota,Harmoni,2000,7,3500,0
-Harmoni,Monas,1500,5,3500,0
-Monas,Bundaran HI,3000,10,3500,0
-Bundaran HI,Dukuh Atas,1000,3,3500,0
-Dukuh Atas,Setiabudi,2000,6,3500,0
-Setiabudi,Senayan,4000,12,3500,0
+# TransJakarta BRT - All Corridors with Bidirectional Routes
+# Corridor 1: Blok M - Kota
+Blok M,Senayan,3000,9,3500,0
 Senayan,Blok M,3000,9,3500,0
-Blok M,Lebak Bulus,8000,25,3500,0
-Bundaran HI,Dukuh Atas BNI,500,2,14000,1
-Dukuh Atas BNI,Setiabudi Astra,1500,3,14000,0
-Setiabudi Astra,Bendungan Hilir,2000,4,14000,0
-Bendungan Hilir,Istora Mandiri,1800,3,14000,0
-Istora Mandiri,Senayan,1200,2,14000,0
-Senayan,Blok M BCA,3500,6,14000,0
-Blok M BCA,Blok A,1000,2,14000,0
-Blok A,Haji Nawi,1500,3,14000,0
-Haji Nawi,Cipete Raya,2000,4,14000,0
-Cipete Raya,Fatmawati,2500,5,14000,0
-Fatmawati,Lebak Bulus Grab,3000,6,14000,0
-Pegangsaan Dua,Boulevard Utara,2000,5,5000,0
-Boulevard Utara,Boulevard Selatan,1500,3,5000,0
-Boulevard Selatan,Pulomas,3000,8,5000,0
-Pulomas,Equestrian,2500,6,5000,0
-Equestrian,Velodrome,2000,5,5000,0
-Jakarta Kota,Kampung Bandan,3000,8,5000,0
-Kampung Bandan,Ancol,4000,12,5000,0
-Ancol,Kemayoran,5000,15,5000,0
-Kemayoran,Pasar Senen,3000,9,5000,0
-Pasar Senen,Gang Senen,1500,4,5000,0
-Gang Senen,Juanda,2000,6,5000,0
-Juanda,Gondangdia,2000,6,5000,0
-Gondangdia,Cikini,1500,4,5000,0
-Cikini,Manggarai,2500,7,5000,0
-Manggarai,Tebet,3000,9,5000,0
-Tebet,Cawang,4000,12,5000,0
-Cawang,Duren Kalibata,3500,10,5000,0
-Duren Kalibata,Pasar Minggu Baru,3000,9,5000,0
-Pasar Minggu Baru,Pasar Minggu,1500,4,5000,0
-Pasar Minggu,Tanjung Barat,2500,7,5000,0
-Tanjung Barat,Lenteng Agung,2000,6,5000,0
-Lenteng Agung,Universitas Pancasila,1800,5,5000,0
-Universitas Pancasila,Universitas Indonesia,2200,6,5000,0
-Universitas Indonesia,Pondok Cina,2000,6,5000,0
-Pondok Cina,Depok,3000,9,5000,0
-Sudirman,Karet,1000,3,5000,0
-Karet,Dukuh Atas,500,2,5000,0
-Sudirman,Palmerah,3000,9,5000,0
-Palmerah,Kebayoran,4000,12,5000,0
-Kebayoran,Pondok Ranji,5000,15,5000,0
-Pondok Ranji,Jurangmangu,3000,9,5000,0
-Jurangmangu,Sudimara,2500,7,5000,0
-Sudimara,Rawa Buntu,2000,6,5000,0
-Rawa Buntu,Serpong,3500,10,5000,0
-Serpong,Cisauk,4000,12,5000,0
-Cisauk,Parung Panjang,5000,15,5000,0
-Parung Panjang,Maja,6000,18,5000,0
-Maja,Rangkasbitung,8000,24,5000,0
-Gambir,Jatinegara,8000,24,5000,0
-Jatinegara,Klender,4000,12,5000,0
-Klender,Cakung,6000,18,5000,0
-Cakung,Kranji,4000,12,5000,0
-Kranji,Bekasi,5000,15,5000,0
-Bekasi,Bekasi Timur,3000,9,5000,0
-Bekasi Timur,Tambun,4000,12,5000,0
-Tambun,Cibitung,5000,15,5000,0
-Cibitung,Cikarang,6000,18,5000,0
-Tanjung Priok,Ancol,3000,9,5000,0
-Tanjung Priok,Rajawali,4000,12,5000,0
-Rajawali,Kemayoran,3500,10,5000,0
-Tanah Abang,Duri,4000,12,5000,0
-Duri,Grogol,3000,9,5000,0
-Grogol,Pesing,2500,7,5000,0
-Pesing,Kali Deres,3000,9,5000,0
-Kali Deres,Rawa Buaya,2000,6,5000,0
-Rawa Buaya,Kalideres,2500,7,5000,0
-Kalideres,Tangerang,8000,24,5000,0
-Kalideres,Damai,3000,9,3500,0
-Damai,Grogol,4000,12,3500,0
-Grogol,Harmoni,6000,18,3500,0
-Pluit,Muara Karang,3000,9,3500,0
-Muara Karang,PIK,4000,12,3500,0
-PIK,Pantai Indah Kapuk,2000,6,3500,0
-Pantai Indah Kapuk,Penjaringan,5000,15,3500,0
-Penjaringan,Tanjung Priok,6000,18,3500,0
-Kampung Melayu,Cawang,4000,12,3500,0
-Cawang,Cililitan,3000,9,3500,0
-Cililitan,Kampung Rambutan,5000,15,3500,0
-Kampung Rambutan,Pasar Rebo,4000,12,3500,0
-Pasar Rebo,Cilangkap,3000,9,3500,0
-Senen,Atrium,2000,6,3500,0
-Atrium,Sarinah,3000,9,3500,0
-Sarinah,Bundaran HI,1500,5,3500,0
-Ciledug,Fatmawati,6000,18,3500,0
-Fatmawati,Cipete,2000,6,3500,0
-Cipete,Pondok Indah,3000,9,3500,0
-Pondok Indah,Lebak Bulus,4000,12,3500,0
-Dukuh Atas,BNI City,300,1,10000,1
-BNI City,Soekarno Hatta Airport,25000,60,75000,0
-Velodrome,Manggarai,6000,18,5000,1
-Manggarai,Sudirman,5000,15,5000,1
-Blok M,Terminal Blok M,200,1,0,1
-Terminal Blok M,Cipulir,4000,12,3500,0
-Cipulir,Pondok Aren,5000,15,3500,0
-Pondok Aren,Bintaro,3000,9,3500,0
-Kelapa Gading,Sunter,4000,12,3500,0
-Sunter,Kemayoran,5000,15,3500,0
-PIK,Cengkareng,8000,24,3500,0
-Cengkareng,Soekarno Hatta Airport,6000,18,3500,0
+Senayan,Bundaran HI,4500,12,3500,0
+Bundaran HI,Senayan,4500,12,3500,0
+Bundaran HI,Monas,2500,7,3500,0
+Monas,Bundaran HI,2500,7,3500,0
+Monas,Harmoni,3000,8,3500,0
+Harmoni,Monas,3000,8,3500,0
+Harmoni,Kota,2800,8,3500,0
+Kota,Harmoni,2800,8,3500,0
+# Corridor 2: Pulogadung - Harmoni
+Pulo Gadung,Kampung Melayu,8000,20,3500,0
+Kampung Melayu,Pulo Gadung,8000,20,3500,0
+Kampung Melayu,Cawang,3500,10,3500,0
+Cawang,Kampung Melayu,3500,10,3500,0
+Cawang,Dukuh Atas,7500,18,3500,1
+Dukuh Atas,Cawang,7500,18,3500,1
+Dukuh Atas,Harmoni,4000,12,3500,0
+Harmoni,Dukuh Atas,4000,12,3500,0
+# Corridor 3: Kalideres - Pasar Baru
+Kalideres,Grogol,9000,25,3500,0
+Grogol,Kalideres,9000,25,3500,0
+Grogol,Tomang,3200,8,3500,0
+Tomang,Grogol,3200,8,3500,0
+Tomang,Tanah Abang,4500,12,3500,0
+Tanah Abang,Tomang,4500,12,3500,0
+Tanah Abang,Harmoni,3500,10,3500,0
+Harmoni,Tanah Abang,3500,10,3500,0
+# Corridor 4: Pulogadung - Dukuh Atas
+Pulo Gadung,Sunter,8500,22,3500,0
+Sunter,Pulo Gadung,8500,22,3500,0
+Sunter,Kelapa Gading,4200,12,3500,0
+Kelapa Gading,Sunter,4200,12,3500,0
+Kelapa Gading,Kampung Bandan,7800,20,3500,0
+Kampung Bandan,Kelapa Gading,7800,20,3500,0
+Kampung Bandan,Ancol,3500,10,3500,0
+Ancol,Kampung Bandan,3500,10,3500,0
+# Corridor 5: Kampung Melayu - Ancol
+Kampung Melayu,Tebet,4500,12,3500,0
+Tebet,Kampung Melayu,4500,12,3500,0
+Tebet,Kuningan,3800,10,3500,0
+Kuningan,Tebet,3800,10,3500,0
+Kuningan,Setiabudi,2500,7,3500,0
+Setiabudi,Kuningan,2500,7,3500,0
+Setiabudi,Dukuh Atas,1800,5,3500,0
+Dukuh Atas,Setiabudi,1800,5,3500,0
+# Corridor 6: Ragunan - Dukuh Atas
+Ragunan Zoo,Blok M,6500,18,3500,0
+Blok M,Ragunan Zoo,6500,18,3500,0
+# MRT Jakarta - North-South Line (Bidirectional)
+Lebak Bulus,Fatmawati,2200,4,14000,0
+Fatmawati,Lebak Bulus,2200,4,14000,0
+Fatmawati,Cipete Raya,1800,3,14000,0
+Cipete Raya,Fatmawati,1800,3,14000,0
+Cipete Raya,Haji Nawi,1500,3,14000,0
+Haji Nawi,Cipete Raya,1500,3,14000,0
+Haji Nawi,Blok A,1200,2,14000,0
+Blok A,Haji Nawi,1200,2,14000,0
+Blok A,Blok M MRT,1000,2,14000,0
+Blok M MRT,Blok A,1000,2,14000,0
+Blok M MRT,ASEAN MRT,1100,2,14000,0
+ASEAN MRT,Blok M MRT,1100,2,14000,0
+ASEAN MRT,Senayan MRT,1200,2,14000,0
+Senayan MRT,ASEAN MRT,1200,2,14000,0
+Senayan MRT,Istora Mandiri MRT,2800,5,14000,0
+Istora Mandiri MRT,Senayan MRT,2800,5,14000,0
+Istora Mandiri MRT,Bendungan Hilir MRT,1800,3,14000,0
+Bendungan Hilir MRT,Istora Mandiri MRT,1800,3,14000,0
+Bendungan Hilir MRT,Setiabudi Astra MRT,2000,4,14000,0
+Setiabudi Astra MRT,Bendungan Hilir MRT,2000,4,14000,0
+Setiabudi Astra MRT,Dukuh Atas MRT,1500,3,14000,0
+Dukuh Atas MRT,Setiabudi Astra MRT,1500,3,14000,0
+Dukuh Atas MRT,Bundaran HI MRT,1800,3,14000,0
+Bundaran HI MRT,Dukuh Atas MRT,1800,3,14000,0
+# LRT Jakarta - Kelapa Gading Line (Bidirectional)
+Velodrome LRT,Boulevard Utara LRT,2800,5,5000,0
+Boulevard Utara LRT,Velodrome LRT,2800,5,5000,0
+Boulevard Utara LRT,Boulevard Selatan LRT,1200,2,5000,0
+Boulevard Selatan LRT,Boulevard Utara LRT,1200,2,5000,0
+Boulevard Selatan LRT,Pegangsaan Dua LRT,3200,6,5000,0
+Pegangsaan Dua LRT,Boulevard Selatan LRT,3200,6,5000,0
+Pegangsaan Dua LRT,Pulomas LRT,2500,5,5000,0
+Pulomas LRT,Pegangsaan Dua LRT,2500,5,5000,0
+Pulomas LRT,Equestrian LRT,3800,7,5000,0
+Equestrian LRT,Pulomas LRT,3800,7,5000,0
+# KRL Commuter Line - Major Lines (Bidirectional)
+# Jakarta-Bogor Line
+Gambir,Gondangdia,2500,4,3000,0
+Gondangdia,Gambir,2500,4,3000,0
+Gondangdia,Cikini,1800,3,3000,0
+Cikini,Gondangdia,1800,3,3000,0
+Cikini,Manggarai,3200,5,3000,0
+Manggarai,Cikini,3200,5,3000,0
+Manggarai,Tebet,2800,4,3000,0
+Tebet,Manggarai,2800,4,3000,0
+# Jakarta-Bekasi Line
+Gambir,Pasar Senen,2200,4,3000,0
+Pasar Senen,Gambir,2200,4,3000,0
+Pasar Senen,Gang Sentiong,1500,3,3000,0
+Gang Sentiong,Pasar Senen,1500,3,3000,0
+Gang Sentiong,Kemayoran,2100,4,3000,0
+Kemayoran,Gang Sentiong,2100,4,3000,0
+Kemayoran,Rajawali,2500,5,3000,0
+Rajawali,Kemayoran,2500,5,3000,0
+Rajawali,Kampung Bandan KRL,2800,5,3000,0
+Kampung Bandan KRL,Rajawali,2800,5,3000,0
+Kampung Bandan KRL,Ancol KRL,3500,6,3000,0
+Ancol KRL,Kampung Bandan KRL,3500,6,3000,0
+Ancol KRL,Tanjung Priok,4200,8,3000,0
+Tanjung Priok,Ancol KRL,4200,8,3000,0
+Pasar Senen,Jatinegara,6500,12,3000,0
+Jatinegara,Pasar Senen,6500,12,3000,0
+Jatinegara,Klender,4200,8,3000,0
+Klender,Jatinegara,4200,8,3000,0
+Klender,Buaran,3500,6,3000,0
+Buaran,Klender,3500,6,3000,0
+Buaran,Klender Baru,2800,5,3000,0
+Klender Baru,Buaran,2800,5,3000,0
+Klender Baru,Cakung,4500,8,3000,0
+Cakung,Klender Baru,4500,8,3000,0
+# Jakarta-Tangerang Line
+Gambir,Tanah Abang,3500,6,3000,0
+Tanah Abang,Gambir,3500,6,3000,0
+Tanah Abang,Grogol,4800,9,3000,0
+Grogol,Tanah Abang,4800,9,3000,0
+Grogol,Cengkareng,8500,15,3000,0
+Cengkareng,Grogol,8500,15,3000,0
+# Cross-System Transfers
+# BRT-MRT Connections
+Blok M,Blok M MRT,200,2,0,0
+Blok M MRT,Blok M,200,2,0,0
+Senayan,Senayan MRT,300,3,0,0
+Senayan MRT,Senayan,300,3,0,0
+Bundaran HI,Bundaran HI MRT,250,2,0,0
+Bundaran HI MRT,Bundaran HI,250,2,0,0
+Dukuh Atas,Dukuh Atas MRT,150,1,0,0
+Dukuh Atas MRT,Dukuh Atas,150,1,0,0
+# BRT-KRL Connections
+Harmoni,Juanda,800,8,0,1
+Juanda,Harmoni,800,8,0,1
+Kampung Bandan,Kampung Bandan KRL,200,2,0,0
+Kampung Bandan KRL,Kampung Bandan,200,2,0,0
+Ancol,Ancol KRL,300,3,0,0
+Ancol KRL,Ancol,300,3,0,0
+Tanah Abang,Tanah Abang KRL,400,4,0,0
+Tanah Abang KRL,Tanah Abang,400,4,0,0
+# Major Shopping Center Connections
+Bundaran HI,Grand Indonesia,500,5,0,1
+Grand Indonesia,Bundaran HI,500,5,0,1
+Bundaran HI,Plaza Indonesia,400,4,0,1
+Plaza Indonesia,Bundaran HI,400,4,0,1
+Senayan,Senayan City,600,6,0,1
+Senayan City,Senayan,600,6,0,1
+Senayan,Plaza Senayan,700,7,0,1
+Plaza Senayan,Senayan,700,7,0,1
+Blok M,Blok M Plaza,300,3,0,1
+Blok M Plaza,Blok M,300,3,0,1
+Kelapa Gading,Kelapa Gading Mall,800,8,0,1
+Kelapa Gading Mall,Kelapa Gading,800,8,0,1
+Grogol,Central Park Mall,1200,12,0,1
+Central Park Mall,Grogol,1200,12,0,1
+Tomang,Taman Anggrek Mall,900,9,0,1
+Taman Anggrek Mall,Tomang,900,9,0,1
+Setiabudi,Kota Kasablanka,3500,15,0,1
+Kota Kasablanka,Setiabudi,3500,15,0,1
+Bundaran HI,Lotte Shopping Avenue,800,6,0,1
+Lotte Shopping Avenue,Bundaran HI,800,6,0,1
+Dukuh Atas,fx Sudirman,600,5,0,1
+fx Sudirman,Dukuh Atas,600,5,0,1
+# University Connections
+Fatmawati,Universitas Indonesia,15000,35,8000,1
+Universitas Indonesia,Fatmawati,15000,35,8000,1
+Grogol,Universitas Bina Nusantara,5500,18,5000,1
+Universitas Bina Nusantara,Grogol,5500,18,5000,1
+Tomang,Universitas Trisakti,3200,12,4000,1
+Universitas Trisakti,Tomang,3200,12,4000,1
+Pasar Minggu,Universitas Pancasila,8500,25,6000,1
+Universitas Pancasila,Pasar Minggu,8500,25,6000,1
+Setiabudi,Institut Teknologi Jakarta,4200,18,5000,1
+Institut Teknologi Jakarta,Setiabudi,4200,18,5000,1
+Grogol,Universitas Mercu Buana,3800,15,4500,1
+Universitas Mercu Buana,Grogol,3800,15,4500,1
+Tomang,Universitas Tarumanagara,2800,12,4000,1
+Universitas Tarumanagara,Tomang,2800,12,4000,1
+# Hospital Connections
+Harmoni,RSUPN Cipto Mangunkusumo,2800,12,4000,1
+RSUPN Cipto Mangunkusumo,Harmoni,2800,12,4000,1
+Fatmawati MRT,RS Fatmawati,800,8,2000,1
+RS Fatmawati,Fatmawati MRT,800,8,2000,1
+Pulomas LRT,RS Persahabatan,3500,15,4500,1
+RS Persahabatan,Pulomas LRT,3500,15,4500,1
+Sunter,RS Tarakan,4200,18,5000,1
+RS Tarakan,Sunter,4200,18,5000,1
+Cawang,RSUD Pasar Rebo,6500,22,6000,1
+RSUD Pasar Rebo,Cawang,6500,22,6000,1
+Grogol,RS Harapan Kita,3500,15,4500,1
+RS Harapan Kita,Grogol,3500,15,4500,1
+Tomang,RS Dharmais,2500,12,4000,1
+RS Dharmais,Tomang,2500,12,4000,1
+# Airport Connections
+Grogol,Soekarno Hatta Airport,25000,60,35000,1
+Soekarno Hatta Airport,Grogol,25000,60,35000,1
+Cengkareng,Soekarno Hatta Airport,15000,35,25000,1
+Soekarno Hatta Airport,Cengkareng,15000,35,25000,1
+Cawang,Halim Perdanakusuma Airport,8500,25,15000,1
+Halim Perdanakusuma Airport,Cawang,8500,25,15000,1
+# Government Building Connections
+Monas,Istana Merdeka,1200,8,3000,1
+Istana Merdeka,Monas,1200,8,3000,1
+Senayan,DPR RI,2800,12,4000,1
+DPR RI,Senayan,2800,12,4000,1
+Harmoni,Balai Kota DKI,2500,10,3500,1
+Balai Kota DKI,Harmoni,2500,10,3500,1
+Monas,Gedung Sate,1500,8,3000,1
+Gedung Sate,Monas,1500,8,3000,1
+Kampung Bandan,Mabes TNI,3500,15,4500,1
+Mabes TNI,Kampung Bandan,3500,15,4500,1
+Kuningan,Kemhan RI,2200,10,3500,1
+Kemhan RI,Kuningan,2200,10,3500,1
+# Tourist Attraction Connections
+Ancol,Ancol Dreamland,1500,8,3000,1
+Ancol Dreamland,Ancol,1500,8,3000,1
+Kota,Kota Tua,800,6,2000,1
+Kota Tua,Kota,800,6,2000,1
+Monas,Monumen Nasional,200,2,1000,1
+Monumen Nasional,Monas,200,2,1000,1
+Pasar Minggu,Ragunan Zoo,6500,20,5000,1
+Ragunan Zoo,Pasar Minggu,6500,20,5000,1
+Kampung Melayu,Taman Mini Indonesia Indah,12000,35,8000,1
+Taman Mini Indonesia Indah,Kampung Melayu,12000,35,8000,1
+Monas,Istiqlal Mosque,1000,6,2000,1
+Istiqlal Mosque,Monas,1000,6,2000,1
+Monas,Jakarta Cathedral,800,5,1500,1
+Jakarta Cathedral,Monas,800,5,1500,1
+# Traditional Market Connections
+Tanah Abang,Pasar Tanah Abang,300,3,1000,1
+Pasar Tanah Abang,Tanah Abang,300,3,1000,1
+Pasar Senen,Pasar Senen Market,200,2,1000,1
+Pasar Senen Market,Pasar Senen,200,2,1000,1
+Blok M,Pasar Mayestik,1200,8,2000,1
+Pasar Mayestik,Blok M,1200,8,2000,1
+Cawang,Pasar Rebo,4500,18,3500,1
+Pasar Rebo,Cawang,4500,18,3500,1
+Jatinegara,Pasar Jatinegara,800,6,1500,1
+Pasar Jatinegara,Jatinegara,800,6,1500,1
+# Business District Connections
+Dukuh Atas,Sudirman CBD,800,6,2500,1
+Sudirman CBD,Dukuh Atas,800,6,2500,1
+Setiabudi,SCBD,2200,12,4000,1
+SCBD,Setiabudi,2200,12,4000,1
+Kuningan,Kuningan CBD,500,4,2000,1
+Kuningan CBD,Kuningan,500,4,2000,1
+Bundaran HI,Thamrin CBD,600,5,2500,1
+Thamrin CBD,Bundaran HI,600,5,2500,1
+Kuningan,Rasuna Said,1200,8,3000,1
+Rasuna Said,Kuningan,1200,8,3000,1
+Kuningan,Mega Kuningan,1800,10,3500,1
+Mega Kuningan,Kuningan,1800,10,3500,1
+# Terminal Bus Connections
+Blok M,Terminal Blok M,400,4,1500,1
+Terminal Blok M,Blok M,400,4,1500,1
+Kampung Melayu,Terminal Kampung Rambutan,8500,25,6000,1
+Terminal Kampung Rambutan,Kampung Melayu,8500,25,6000,1
+Lebak Bulus,Terminal Lebak Bulus,500,5,1500,1
+Terminal Lebak Bulus,Lebak Bulus,500,5,1500,1
+Kalideres,Terminal Kalideres,600,6,2000,1
+Terminal Kalideres,Kalideres,600,6,2000,1
+Pulo Gadung,Terminal Pulogadung,800,8,2500,1
+Terminal Pulogadung,Pulo Gadung,800,8,2500,1
+Sunter,Terminal Rawamangun,6500,20,5000,1
+Terminal Rawamangun,Sunter,6500,20,5000,1
+Cawang,Terminal Pinang Ranti,4200,15,4000,1
+Terminal Pinang Ranti,Cawang,4200,15,4000,1
+Grogol,Terminal Grogol,500,4,1500,1
+Terminal Grogol,Grogol,500,4,1500,1
+Pasar Minggu,Terminal Pasar Minggu,600,5,1500,1
+Terminal Pasar Minggu,Pasar Minggu,600,5,1500,1
+Pasar Senen,Terminal Senen,400,3,1200,1
+Terminal Senen,Pasar Senen,400,3,1200,1
+Cawang,Terminal Cililitan,3500,12,3000,1
+Terminal Cililitan,Cawang,3500,12,3000,1
+# Extended Routes to Outskirts
+Terminal Lebak Bulus,Pondok Indah,3500,12,4000,1
+Pondok Indah,Terminal Lebak Bulus,3500,12,4000,1
+Pondok Indah,Pondok Indah Mall,800,6,2000,1
+Pondok Indah Mall,Pondok Indah,800,6,2000,1
+Kelapa Gading,Pantai Indah Kapuk,12000,35,8000,1
+Pantai Indah Kapuk,Kelapa Gading,12000,35,8000,1
+Grogol,Puri Indah,8500,25,6000,1
+Puri Indah,Grogol,8500,25,6000,1
+Fatmawati,Kemang,4500,18,5000,1
+Kemang,Fatmawati,4500,18,5000,1
+Bundaran HI,Menteng,2800,12,3500,1
+Menteng,Bundaran HI,2800,12,3500,1
+Blok M,Kebayoran Baru,2200,10,3000,1
+Kebayoran Baru,Blok M,2200,10,3000,1
+Ancol,Pluit,6500,20,5000,1
+Pluit,Ancol,6500,20,5000,1
+# Sports Venue Connections
+Senayan,Gelora Bung Karno,1200,8,3000,1
+Gelora Bung Karno,Senayan,1200,8,3000,1
+Senayan,Senayan Sports Complex,800,6,2500,1
+Senayan Sports Complex,Senayan,800,6,2500,1
+Kelapa Gading,Jakarta International Stadium,5500,20,6000,1
+Jakarta International Stadium,Kelapa Gading,5500,20,6000,1

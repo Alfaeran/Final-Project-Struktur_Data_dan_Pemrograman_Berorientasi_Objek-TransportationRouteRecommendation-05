@@ -1,0 +1,172 @@
+// Jakarta Transportation Data with GPS Coordinates - Complete Network
+// Format: station_name,latitude,longitude,area
+// TransJakarta BRT Stations - All Corridors
+Terminal Pulogadung,-6.2030,106.8976,Jakarta Timur
+Kota,-6.1375,106.8133,Jakarta Barat
+Harmoni,-6.1652,106.8133,Jakarta Pusat
+Monas,-6.1751,106.8270,Jakarta Pusat
+Bundaran HI,-6.1944,106.8230,Jakarta Pusat
+Dukuh Atas,-6.2088,106.8230,Jakarta Pusat
+Setiabudi,-6.2139,106.8256,Jakarta Selatan
+Senayan,-6.2296,106.8025,Jakarta Selatan
+Blok M,-6.2441,106.7994,Jakarta Selatan
+Lebak Bulus,-6.2891,106.7746,Jakarta Selatan
+Pondok Indah,-6.2669,106.7837,Jakarta Selatan
+Fatmawati,-6.2628,106.7927,Jakarta Selatan
+Cipete Raya,-6.2549,106.7956,Jakarta Selatan
+Haji Nawi,-6.2435,106.7993,Jakarta Selatan
+Blok A,-6.2339,106.8052,Jakarta Selatan
+Layang,-6.2287,106.8101,Jakarta Selatan
+Transjakarta Harmoni,-6.1649,106.8246,Jakarta Pusat
+Sawah Besar,-6.1623,106.8321,Jakarta Pusat
+Mangga Besar,-6.1436,106.8345,Jakarta Pusat
+Glodok,-6.1378,106.8144,Jakarta Barat
+Jakarta Kota,-6.1375,106.8133,Jakarta Barat
+Kampung Bandan,-6.1289,106.8278,Jakarta Utara
+Ancol,-6.1234,106.8456,Jakarta Utara
+Kamal,-6.1123,106.7012,Jakarta Barat
+Cengkareng,-6.1345,106.7456,Jakarta Barat
+Soekarno Hatta,-6.1256,106.6558,Jakarta Barat
+Grogol,-6.1567,106.7890,Jakarta Barat
+Tomang,-6.1678,106.7994,Jakarta Barat
+Tanah Abang,-6.1856,106.8133,Jakarta Pusat
+Bendungan Hilir,-6.2011,106.8189,Jakarta Pusat
+Istora,-6.2176,106.8078,Jakarta Pusat
+Cawang,-6.2411,106.8744,Jakarta Timur
+Kampung Melayu,-6.2234,106.8589,Jakarta Timur
+Pulo Gadung,-6.1934,106.8956,Jakarta Timur
+Kelapa Gading,-6.1567,106.9089,Jakarta Utara
+Sunter,-6.1445,106.8789,Jakarta Utara
+// MRT Jakarta Stations - North-South Line
+Lebak Bulus MRT,-6.2891,106.7746,Jakarta Selatan
+Fatmawati MRT,-6.2628,106.7927,Jakarta Selatan
+Cipete Raya MRT,-6.2549,106.7956,Jakarta Selatan
+Haji Nawi MRT,-6.2435,106.7993,Jakarta Selatan
+Blok A MRT,-6.2339,106.8052,Jakarta Selatan
+Blok M MRT,-6.2441,106.7994,Jakarta Selatan
+ASEAN MRT,-6.2376,106.7981,Jakarta Selatan
+Senayan MRT,-6.2296,106.8025,Jakarta Selatan
+Istora Mandiri MRT,-6.2176,106.8078,Jakarta Pusat
+Bendungan Hilir MRT,-6.2011,106.8189,Jakarta Pusat
+Setiabudi Astra MRT,-6.2139,106.8256,Jakarta Selatan
+Dukuh Atas MRT,-6.2088,106.8230,Jakarta Pusat
+Bundaran HI MRT,-6.1944,106.8230,Jakarta Pusat
+// LRT Jakarta Stations - Kelapa Gading Line
+Velodrome LRT,-6.2189,106.8656,Jakarta Timur
+Boulevard Utara LRT,-6.1889,106.8767,Jakarta Timur
+Boulevard Selatan LRT,-6.1945,106.8789,Jakarta Timur
+Pegangsaan Dua LRT,-6.1734,106.8823,Jakarta Utara
+Pulomas LRT,-6.1867,106.8901,Jakarta Timur
+Equestrian LRT,-6.2034,106.8934,Jakarta Timur
+// KRL Commuter Line Stations - Major Lines
+Manggarai,-6.2145,106.8456,Jakarta Selatan
+Tebet,-6.2267,106.8567,Jakarta Selatan
+Cikini,-6.1889,106.8378,Jakarta Pusat
+Gondangdia,-6.1778,106.8389,Jakarta Pusat
+Juanda,-6.1667,106.8300,Jakarta Pusat
+Gambir,-6.1734,106.8289,Jakarta Pusat
+Pasar Senen,-6.1756,106.8445,Jakarta Pusat
+Gang Sentiong,-6.1678,106.8478,Jakarta Pusat
+Kemayoran,-6.1567,106.8512,Jakarta Pusat
+Rajawali,-6.1456,106.8534,Jakarta Utara
+Kampung Bandan KRL,-6.1289,106.8278,Jakarta Utara
+Ancol KRL,-6.1234,106.8456,Jakarta Utara
+Tanjung Priok,-6.1123,106.8789,Jakarta Utara
+Jatinegara,-6.2156,106.8789,Jakarta Timur
+Klender,-6.2234,106.9012,Jakarta Timur
+Buaran,-6.2156,106.9123,Jakarta Timur
+Klender Baru,-6.2289,106.9234,Jakarta Timur
+Cakung,-6.1834,106.9456,Jakarta Timur
+Kramat Jati,-6.2567,106.8834,Jakarta Timur
+// Major Bus Terminals
+Terminal Blok M,-6.2441,106.7994,Jakarta Selatan
+Terminal Kampung Rambutan,-6.3123,106.8734,Jakarta Timur
+Terminal Lebak Bulus,-6.2891,106.7746,Jakarta Selatan
+Terminal Kalideres,-6.1445,106.7012,Jakarta Barat
+Terminal Rawamangun,-6.1889,106.8934,Jakarta Timur
+Terminal Pinang Ranti,-6.2567,106.8945,Jakarta Timur
+Terminal Grogol,-6.1567,106.7890,Jakarta Barat
+Terminal Pasar Minggu,-6.2845,106.8456,Jakarta Selatan
+Terminal Senen,-6.1756,106.8445,Jakarta Pusat
+Terminal Cililitan,-6.2567,106.8734,Jakarta Timur
+// Shopping Centers & Major Landmarks
+Grand Indonesia,-6.1944,106.8230,Jakarta Pusat
+Plaza Indonesia,-6.1933,106.8222,Jakarta Pusat
+Taman Anggrek Mall,-6.1789,106.7912,Jakarta Barat
+Central Park Mall,-6.1745,106.7923,Jakarta Barat
+Mall Taman Anggrek,-6.1789,106.7912,Jakarta Barat
+Gandaria City,-6.2445,106.7834,Jakarta Selatan
+Pondok Indah Mall,-6.2669,106.7837,Jakarta Selatan
+Kelapa Gading Mall,-6.1567,106.9089,Jakarta Utara
+Mall of Indonesia,-6.1456,106.9067,Jakarta Utara
+Senayan City,-6.2234,106.8012,Jakarta Pusat
+Plaza Senayan,-6.2267,106.8034,Jakarta Pusat
+Sarinah,-6.1889,106.8234,Jakarta Pusat
+Kota Kasablanka,-6.2423,106.8423,Jakarta Selatan
+Lotte Shopping Avenue,-6.2189,106.8234,Jakarta Pusat
+fx Sudirman,-6.2089,106.8134,Jakarta Pusat
+// Universities & Education
+Universitas Indonesia,-6.3634,106.8234,Jakarta Selatan
+Universitas Bina Nusantara,-6.2789,106.7823,Jakarta Barat
+Universitas Trisakti,-6.1678,106.7956,Jakarta Barat
+Universitas Pancasila,-6.3423,106.8345,Jakarta Selatan
+Institut Teknologi Jakarta,-6.2456,106.8567,Jakarta Selatan
+Universitas Mercu Buana,-6.2234,106.7834,Jakarta Barat
+Universitas Tarumanagara,-6.1734,106.7834,Jakarta Barat
+Institut Sains dan Teknologi Nasional,-6.2567,106.8234,Jakarta Selatan
+// Hospitals
+RSUPN Cipto Mangunkusumo,-6.1867,106.8345,Jakarta Pusat
+RS Fatmawati,-6.2628,106.7927,Jakarta Selatan
+RS Persahabatan,-6.1789,106.8956,Jakarta Timur
+RS Tarakan,-6.1234,106.8789,Jakarta Pusat
+RSUD Pasar Rebo,-6.2789,106.8934,Jakarta Timur
+RS Harapan Kita,-6.1567,106.7834,Jakarta Barat
+RS Dharmais,-6.1834,106.7923,Jakarta Barat
+// Government Buildings
+Istana Merdeka,-6.1703,106.8220,Jakarta Pusat
+DPR RI,-6.2089,106.8012,Jakarta Pusat
+Balai Kota DKI,-6.1711,106.8256,Jakarta Pusat
+Gedung Sate,-6.1945,106.8267,Jakarta Pusat
+Mabes TNI,-6.1634,106.8456,Jakarta Pusat
+Kemhan RI,-6.2234,106.8345,Jakarta Selatan
+// Business Districts
+Sudirman CBD,-6.2089,106.8189,Jakarta Pusat
+Kuningan CBD,-6.2234,106.8312,Jakarta Selatan
+Thamrin CBD,-6.1889,106.8234,Jakarta Pusat
+Rasuna Said,-6.2178,106.8345,Jakarta Selatan
+SCBD,-6.2267,106.8123,Jakarta Selatan
+Mega Kuningan,-6.2356,106.8289,Jakarta Selatan
+// Residential Areas
+Kemang,-6.2634,106.8134,Jakarta Selatan
+Menteng,-6.1845,106.8345,Jakarta Pusat
+Kebayoran Baru,-6.2423,106.7945,Jakarta Selatan
+Pondok Indah,-6.2669,106.7837,Jakarta Selatan
+Kelapa Gading,-6.1567,106.9089,Jakarta Utara
+Pluit,-6.1234,106.7834,Jakarta Utara
+Pantai Indah Kapuk,-6.1123,106.7456,Jakarta Utara
+Puri Indah,-6.1734,106.7345,Jakarta Barat
+// Traditional Markets
+Pasar Tanah Abang,-6.1856,106.8133,Jakarta Pusat
+Pasar Senen,-6.1756,106.8445,Jakarta Pusat
+Pasar Minggu,-6.2845,106.8456,Jakarta Selatan
+Pasar Mayestik,-6.2423,106.7834,Jakarta Selatan
+Pasar Rebo,-6.2789,106.8934,Jakarta Timur
+Pasar Jatinegara,-6.2156,106.8789,Jakarta Timur
+// Entertainment & Tourism
+Taman Mini Indonesia Indah,-6.3012,106.8953,Jakarta Timur
+Ragunan Zoo,-6.3123,106.8234,Jakarta Selatan
+Ancol Dreamland,-6.1234,106.8456,Jakarta Utara
+Kota Tua,-6.1375,106.8133,Jakarta Barat
+Monumen Nasional,-6.1751,106.8270,Jakarta Pusat
+Istiqlal Mosque,-6.1703,106.8289,Jakarta Pusat
+Jakarta Cathedral,-6.1689,106.8278,Jakarta Pusat
+// Sports Venues
+Gelora Bung Karno,-6.2189,106.8012,Jakarta Pusat
+Senayan Sports Complex,-6.2234,106.8023,Jakarta Pusat
+Jakarta International Stadium,-6.1289,106.8934,Jakarta Utara
+// Airports & Transportation Hubs
+Soekarno Hatta Airport,-6.1256,106.6558,Tangerang
+Halim Perdanakusuma Airport,-6.2667,106.8911,Jakarta Timur
+Gambir Station,-6.1734,106.8289,Jakarta Pusat
+Pasar Senen Station,-6.1756,106.8445,Jakarta Pusat
+Tanjung Priok Port,-6.1123,106.8789,Jakarta Utara
