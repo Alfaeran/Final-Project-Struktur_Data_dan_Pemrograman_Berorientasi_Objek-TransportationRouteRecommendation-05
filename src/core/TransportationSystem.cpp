@@ -2,7 +2,7 @@
 #include "include/io/ConfigManager.h"
 #include "include/io/CSVHandler.h"
 #include "include/algorithms/DijkstraStrategy.h"
-#include "include/algorithms/AStarStrategy.h"
+// #include "include/algorithms/AStarStrategy.h"
 #include "include/algorithms/PathFinder.h"
 #include <iostream>
 #include <memory>
