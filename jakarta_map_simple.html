@@ -48,6 +48,19 @@ select, button { padding: 6px 10px; margin: 0 5px 10px 0; border-radius: 5px; bo
 <li>📍 <strong>Interactive Elements:</strong> Click markers and routes for details</li>
 </ul>
 </div>
+<div class='info'>
+<!-- CRUD Controls -->
+<div style="margin-bottom:10px;display:flex;flex-wrap:wrap;gap:8px;">
+  <button onclick="showAddStationModal()">Tambah Stasiun</button>
+  <button onclick="showEditStationModal()">Edit Stasiun</button>
+  <button onclick="showDeleteStationModal()">Hapus Stasiun</button>
+  <button onclick="showAddConnectionModal()">Tambah Koneksi</button>
+  <button onclick="showDeleteConnectionModal()">Hapus Koneksi</button>
+</div>
+</div>
+<div id="modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;">
+  <div id="modalContent" style="background:white;padding:24px 18px;border-radius:10px;min-width:280px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,0.18);"></div>
+</div>
 <script>
 // Data node dan edge
 var nodes = [
@@ -193,6 +206,169 @@ function findRoute() {
 }
 // Tampilkan rute default saat load
 window.onload = function() { findRoute(); };
+
+// --- CRUD Modal Logic ---
+function showModal(html, onSubmit) {
+  var modal = document.getElementById('modal');
+  var modalContent = document.getElementById('modalContent');
+  modalContent.innerHTML = html;
+  modal.style.display = 'flex';
+  var form = modalContent.querySelector('form');
+  if (form) {
+    form.onsubmit = function(e) {
+      e.preventDefault();
+      onSubmit && onSubmit(new FormData(form));
+      modal.style.display = 'none';
+    };
+  }
+  modalContent.querySelectorAll('button[type="button"]').forEach(function(btn){
+    btn.onclick = function(){ modal.style.display = 'none'; };
+  });
+}
+window.onclick = function(event) {
+  var modal = document.getElementById('modal');
+  if (event.target === modal) modal.style.display = 'none';
+};
+// --- CRUD Station ---
+function showAddStationModal() {
+  showModal(`
+    <form><h3>Tambah Stasiun</h3>
+      <label>ID</label><input name="id" required />
+      <label>Nama</label><input name="name" required />
+      <label>Latitude</label><input name="lat" type="number" step="any" required />
+      <label>Longitude</label><input name="lon" type="number" step="any" required />
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;">
+        <button type="submit">Tambah</button>
+        <button type="button">Batal</button>
+      </div>
+    </form>
+  `, function(form) {
+    var id = form.get('id');
+    if (nodes.find(n => n.id === id)) { alert('ID sudah ada!'); return; }
+    nodes.push({id:id, name:form.get('name'), lat:parseFloat(form.get('lat')), lon:parseFloat(form.get('lon'))});
+    refreshMapAndUI();
+  });
+}
+function showEditStationModal() {
+  var options = nodes.map(n => `<option value="${n.id}">${n.id} - ${n.name}</option>`).join('');
+  showModal(`
+    <form><h3>Edit Stasiun</h3>
+      <label>Stasiun</label><select name="id" required>${options}</select>
+      <label>Nama</label><input name="name" required />
+      <label>Latitude</label><input name="lat" type="number" step="any" required />
+      <label>Longitude</label><input name="lon" type="number" step="any" required />
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;">
+        <button type="submit">Simpan</button>
+        <button type="button">Batal</button>
+      </div>
+    </form>
+  `, function(form) {
+    var id = form.get('id');
+    var idx = nodes.findIndex(n => n.id === id);
+    if (idx < 0) return;
+    nodes[idx] = {id:id, name:form.get('name'), lat:parseFloat(form.get('lat')), lon:parseFloat(form.get('lon'))};
+    refreshMapAndUI();
+  });
+  setTimeout(function(){
+    var select = document.querySelector('#modalContent select[name="id"]');
+    var name = document.querySelector('#modalContent input[name="name"]');
+    var lat = document.querySelector('#modalContent input[name="lat"]');
+    var lon = document.querySelector('#modalContent input[name="lon"]');
+    function fill() {
+      var n = nodes.find(x => x.id === select.value);
+      if (!n) return;
+      name.value = n.name;
+      lat.value = n.lat;
+      lon.value = n.lon;
+    }
+    select.onchange = fill;
+    fill();
+  }, 100);
+}
+function showDeleteStationModal() {
+  var options = nodes.map(n => `<option value="${n.id}">${n.id} - ${n.name}</option>`).join('');
+  showModal(`
+    <form><h3>Hapus Stasiun</h3>
+      <label>Stasiun</label><select name="id" required>${options}</select>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;">
+        <button type="submit">Hapus</button>
+        <button type="button">Batal</button>
+      </div>
+    </form>
+  `, function(form) {
+    var id = form.get('id');
+    nodes = nodes.filter(n => n.id !== id);
+    edges = edges.filter(e => e.from !== id && e.to !== id);
+    refreshMapAndUI();
+  });
+}
+// --- CRUD Connection ---
+function showAddConnectionModal() {
+  var options = nodes.map(n => `<option value="${n.id}">${n.id} - ${n.name}</option>`).join('');
+  showModal(`
+    <form><h3>Tambah Koneksi</h3>
+      <label>Dari</label><select name="from" required>${options}</select>
+      <label>Ke</label><select name="to" required>${options}</select>
+      <label>Jarak</label><input name="distance" type="number" step="any" required />
+      <label>Waktu</label><input name="time" type="number" step="any" required />
+      <label>Biaya</label><input name="cost" type="number" step="any" required />
+      <label>Transfer</label><input name="transfers" type="number" step="1" required />
+      <label>Mode</label><input name="mode" required />
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;">
+        <button type="submit">Tambah</button>
+        <button type="button">Batal</button>
+      </div>
+    </form>
+  `, function(form) {
+    var from = form.get('from');
+    var to = form.get('to');
+    edges.push({from:from, to:to, distance:parseFloat(form.get('distance')), time:parseFloat(form.get('time')), cost:parseFloat(form.get('cost')), transfers:parseInt(form.get('transfers')), mode:form.get('mode')});
+    refreshMapAndUI();
+  });
+}
+function showDeleteConnectionModal() {
+  var options = nodes.map(n => `<option value="${n.id}">${n.id} - ${n.name}</option>`).join('');
+  showModal(`
+    <form><h3>Hapus Koneksi</h3>
+      <label>Dari</label><select name="from" required>${options}</select>
+      <label>Ke</label><select name="to" required>${options}</select>
+      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end;">
+        <button type="submit">Hapus</button>
+        <button type="button">Batal</button>
+      </div>
+    </form>
+  `, function(form) {
+    var from = form.get('from');
+    var to = form.get('to');
+    edges = edges.filter(e => !(e.from === from && e.to === to));
+    refreshMapAndUI();
+  });
+}
+// --- Refresh UI after CRUD ---
+function refreshMapAndUI() {
+  // Remove all markers
+  if (window.markers) { Object.values(window.markers).forEach(m => map.removeLayer(m)); }
+  window.markers = {};
+  // Remove last route
+  if (lastRouteLine) { map.removeLayer(lastRouteLine); lastRouteLine = null; }
+  // Redraw markers
+  nodes.forEach(function(node) {
+    var marker = L.marker([node.lat, node.lon], {
+      icon: L.divIcon({
+        className: 'custom-div-icon',
+        html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      })
+    }).addTo(map);
+    marker.bindPopup('<div style="min-width: 200px;"><h4 style="margin: 0 0 10px 0; color: #333;">🚉 ' + node.id + '</h4><p><strong>Name:</strong> ' + node.name + '</p><p><strong>Coordinates:</strong><br>Lat: ' + node.lat + '<br>Lon: ' + node.lon + '</p></div>');
+    window.markers[node.id] = marker;
+  });
+  // Redraw dropdowns
+  populateDropdowns();
+  // Redraw route if possible
+  findRoute();
+}
 </script>
 <h2>🚉 Station Directory:</h2>
 <table>

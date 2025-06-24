@@ -860,11 +860,15 @@
             const modalContent = document.getElementById('modalContent');
             modalContent.innerHTML = html;
             modal.style.display = 'flex';
-            modalContent.onsubmit = function(e) {
-                e.preventDefault();
-                onSubmit && onSubmit(new FormData(modalContent));
-                modal.style.display = 'none';
-            };
+            // Perbaikan: event submit harus di form, bukan di modalContent
+            var form = modalContent.querySelector('form');
+            if (form) {
+                form.onsubmit = function(e) {
+                    e.preventDefault();
+                    onSubmit && onSubmit(new FormData(form));
+                    modal.style.display = 'none';
+                };
+            }
             modalContent.querySelectorAll('button[type="button"]').forEach(btn => {
                 btn.onclick = () => { modal.style.display = 'none'; };
             });
