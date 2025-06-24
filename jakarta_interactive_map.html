@@ -7,37 +7,122 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; }
-        .header { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 20px; text-align: center; }
-        .header h1 { margin: 0; font-size: 2em; }
-        .controls { padding: 20px; background: #f8f9fa; border-bottom: 2px solid #e9ecef; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 15px; align-items: end; }
-        .control-group { display: flex; flex-direction: column; }
-        .control-group label { font-weight: bold; margin-bottom: 5px; color: #333; }
-        input, select, button { padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
-        button { background: #4CAF50; color: white; border: none; cursor: pointer; transition: background 0.3s; }
-        button:hover { background: #45a049; }
+        html, body { height: 100%; width: 100%; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; overflow-y: auto; overflow-x: hidden; }
+        .container { width: 100%; margin: 0 auto; background: white; border-radius: 0 0 15px 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: visible; }
+        .header { background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; padding: 20px 10px 10px 10px; text-align: center; }
+        .header h1 { margin: 0; font-size: 2em; letter-spacing: 1px; }
+        .controls {
+            padding: 15px 10px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            min-width: 140px;
+            max-width: 180px;
+            flex: 0 0 170px;
+            margin-bottom: 8px;
+        }
+        .control-group label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+            white-space: nowrap;
+        }
+        .control-group input,
+        .control-group select {
+            width: 100%;
+            max-width: 170px;
+            box-sizing: border-box;
+        }
+        .control-group:last-child {
+            flex: 0 0 120px;
+            min-width: 100px;
+            max-width: 140px;
+        }
+        .control-group:last-child button {
+            width: 100%;
+            margin-bottom: 6px;
+            font-size: 15px;
+            padding: 10px 0;
+        }
+        button { background: linear-gradient(90deg, #4CAF50 60%, #45a049 100%); color: white; border: none; cursor: pointer; font-weight: bold; box-shadow: 0 2px 8px rgba(76,175,80,0.08); transition: background 0.3s, box-shadow 0.2s; }
+        button:hover:not(:disabled) { background: linear-gradient(90deg, #45a049 60%, #388e3c 100%); box-shadow: 0 4px 16px rgba(76,175,80,0.15); }
         button:disabled { background: #ccc; cursor: not-allowed; }
-        #map { height: 600px; width: 100%; border-top: 3px solid #4CAF50; }
-        .info-panel { padding: 20px; background: #f8f9fa; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .stat-box { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); text-align: center; }
-        .stat-value { font-size: 24px; font-weight: bold; color: #4CAF50; }
-        .route-info { background: white; padding: 20px; border-radius: 10px; margin-top: 15px; box-shadow: 0 4px 15px rgba(0,123,255,0.2); border-left: 5px solid #007bff; display: none; }
-        .route-summary { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 15px 0; }
-        .route-steps { max-height: 300px; overflow-y: auto; margin: 15px 0; }
-        .route-step { background: #f8f9fa; padding: 12px; margin: 8px 0; border-radius: 6px; border-left: 4px solid #007bff; }
-        .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .step-details { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; font-size: 12px; }
-        .detail-item { text-align: center; padding: 5px; background: white; border-radius: 4px; }
-        .loading { display: none; text-align: center; padding: 20px; color: #007bff; }
-        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 0 auto 10px; }
+        #map { height: 45vh; min-height: 250px; max-height: 60vh; width: 100%; border-top: 3px solid #4CAF50; border-bottom: 3px solid #4CAF50; border-radius: 0 0 15px 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .info-panel { padding: 15px 10px; background: #f8f9fa; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 15px; }
+        .stat-box { background: white; padding: 12px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); text-align: center; transition: box-shadow 0.2s; }
+        .stat-box:hover { box-shadow: 0 6px 18px rgba(76,175,80,0.13); }
+        .stat-value { font-size: 22px; font-weight: bold; color: #4CAF50; }
+        .route-info { background: white; padding: 15px 10px; border-radius: 10px; margin-top: 10px; box-shadow: 0 4px 15px rgba(0,123,255,0.13); border-left: 5px solid #007bff; display: none; }
+        .route-summary { background: #e3f2fd; padding: 12px; border-radius: 8px; margin: 10px 0; }
+        .route-steps { max-height: 220px; overflow-y: auto; margin: 10px 0; }
+        .route-step { background: #f8f9fa; padding: 10px; margin: 6px 0; border-radius: 6px; border-left: 4px solid #007bff; transition: box-shadow 0.2s; }
+        .route-step:hover { box-shadow: 0 2px 8px rgba(33,150,243,0.10); }
+        .step-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+        .step-details { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; font-size: 12px; }
+        .detail-item { text-align: center; padding: 4px; background: white; border-radius: 4px; }
+        .loading { display: none; text-align: center; padding: 15px; color: #007bff; }
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; width: 28px; height: 28px; animation: spin 1s linear infinite; margin: 0 auto 8px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .connection-info { background: #fff3e0; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #ff9800; display: none; }
+        .connection-info { background: #fff3e0; padding: 12px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ff9800; display: none; }
         .search-box { position: relative; }
         .search-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; z-index: 1000; display: none; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .search-option { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; }
+        .search-option { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; transition: background 0.2s; }
         .search-option:hover { background: #f8f9fa; }
+        .crud-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 0 0;
+        }
+        .crud-controls button {
+            background: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .crud-controls button:hover { background: #1565c0; }
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.3); align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: white; padding: 24px 18px; border-radius: 10px; min-width: 280px; max-width: 95vw;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+        }
+        .modal-content label { display: block; margin: 8px 0 3px 0; font-weight: bold; }
+        .modal-content input, .modal-content select {
+            width: 100%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;
+        }
+        .modal-content .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+        .modal-content button { padding: 8px 16px; font-size: 14px; }
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .container { width: 100vw; }
+            .controls { flex-direction: column; gap: 10px; align-items: stretch; }
+            .control-group { min-width: 0; width: 100%; max-width: 100%; flex: 1 1 100%; }
+            .control-group:last-child { width: 100%; max-width: 100%; flex: 1 1 100%; }
+        }
+        @media (max-width: 600px) {
+            .controls { flex-direction: column; gap: 8px; padding: 7px; }
+            .control-group { width: 100%; min-width: 0; max-width: 100%; flex: 1 1 100%; }
+            .control-group:last-child { width: 100%; max-width: 100%; flex: 1 1 100%; }
+            button { width: 100%; margin-bottom: 6px; }
+        }
     </style>
 </head>
 <body>
@@ -46,7 +131,6 @@
             <h1>Jakarta Transportation Route System</h1>
             <p>Interactive Map with Advanced Route Finding</p>
         </div>
-        
         <div class="controls">
             <div class="control-group">
                 <label>From Station:</label>
@@ -84,7 +168,16 @@
                 <button onclick="clearRoute()">Clear</button>
             </div>
         </div>
-        
+        <div class="crud-controls">
+            <button onclick="showAddStationModal()">Add Station</button>
+            <button onclick="showEditStationModal()">Edit Station</button>
+            <button onclick="showDeleteStationModal()">Delete Station</button>
+            <button onclick="showAddConnectionModal()">Add Connection</button>
+            <button onclick="showDeleteConnectionModal()">Delete Connection</button>
+        </div>
+        <div id="modal" class="modal">
+            <div class="modal-content" id="modalContent"></div>
+        </div>
         <div id="map"></div>
         
         <div class="info-panel">
@@ -128,6 +221,7 @@
         let routeMarkers = [];
         let connectionMarkers = [];
         let stationMarkers = {};
+        let connectionLines = [];
         
         // Initialize map
         function initMap() {
@@ -276,104 +370,29 @@
                     opacity: 1,
                     fillOpacity: 0.8
                 }).addTo(map);
-                
                 marker.bindPopup(`<strong>${stationId}</strong><br>${station.name}<br><small>Click to see connections</small>`);
-                
-                // Add click event to show connections
-                marker.on('click', function() {
-                    showStationConnections(stationId);
-                });
-                
+                marker.on('click', function() { showStationConnections(stationId); });
                 stationMarkers[stationId] = marker;
             }
         }
-        
-        // Show station connections when clicked
-        function showStationConnections(stationId) {
-            clearConnections();
-            
-            const station = stations[stationId];
-            const connections = networkGraph[stationId] || [];
-            
-            if (connections.length === 0) {
-                document.getElementById('connectionInfo').style.display = 'block';
-                document.getElementById('connectionDetails').innerHTML = `
-                    <p><strong>${stationId}</strong> has no outgoing connections in the network.</p>
-                `;
-                return;
-            }
-            
-            // Highlight selected station
-            if (stationMarkers[stationId]) {
-                stationMarkers[stationId].setStyle({
-                    radius: 10,
-                    fillColor: '#ff4444',
-                    color: 'white',
-                    weight: 3
+        function drawAllConnections() {
+            // Remove old lines
+            connectionLines.forEach(line => map.removeLayer(line));
+            connectionLines = [];
+            for (let from in networkGraph) {
+                networkGraph[from].forEach(conn => {
+                    if (stations[from] && stations[conn.to]) {
+                        const line = L.polyline([
+                            [stations[from].lat, stations[from].lon],
+                            [stations[conn.to].lat, stations[conn.to].lon]
+                        ], {
+                            color: '#bdbdbd', weight: 2, opacity: 0.5, dashArray: '2, 6', interactive: false
+                        }).addTo(map);
+                        connectionLines.push(line);
+                    }
                 });
             }
-            
-            // Draw connection lines and highlight connected stations
-            connections.forEach(conn => {
-                if (stations[conn.to]) {
-                    // Draw line
-                    const line = L.polyline([
-                        [station.lat, station.lon],
-                        [stations[conn.to].lat, stations[conn.to].lon]
-                    ], {
-                        color: '#2196F3',
-                        weight: 3,
-                        opacity: 0.7,
-                        dashArray: '5, 5'
-                    }).addTo(map);
-                    
-                    connectionMarkers.push(line);
-                    
-                    // Highlight connected station
-                    if (stationMarkers[conn.to]) {
-                        stationMarkers[conn.to].setStyle({
-                            radius: 8,
-                            fillColor: '#2196F3',
-                            color: 'white',
-                            weight: 2
-                        });
-                    }
-                }
-            });
-            
-            // Show connection details
-            let connectionsHtml = `
-                <p><strong>${stationId}</strong> connects to <strong>${connections.length}</strong> stations:</p>
-                <div style="max-height: 200px; overflow-y: auto;">
-            `;
-            
-            connections.forEach(conn => {
-                const distanceText = conn.distance >= 1000 ? 
-                    `${(conn.distance/1000).toFixed(1)} km` : `${conn.distance} m`;
-                const costText = conn.cost === 0 ? 'Free' : `Rp ${conn.cost.toLocaleString()}`;
-                const timeText = conn.time >= 60 ? 
-                    `${Math.floor(conn.time/60)}h ${conn.time%60}m` : `${conn.time} min`;
-                
-                connectionsHtml += `
-                    <div style="background: white; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 3px solid #2196F3;">
-                        <strong>${conn.to}</strong><br>
-                        <small style="color: #666;">${stations[conn.to]?.name || 'Unknown'}</small><br>
-                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; margin-top: 5px; font-size: 11px;">
-                            <div style="text-align: center;">${distanceText}</div>
-                            <div style="text-align: center;">⏱️ ${timeText}</div>
-                            <div style="text-align: center;">💰 ${costText}</div>
-                            <div style="text-align: center;">${conn.mode}</div>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            connectionsHtml += '</div>';
-            
-            document.getElementById('connectionInfo').style.display = 'block';
-            document.getElementById('connectionDetails').innerHTML = connectionsHtml;
         }
-        
         // Clear connection visualization
         function clearConnections() {
             // Remove connection lines
@@ -426,6 +445,12 @@
         
         // Enhanced Dijkstra algorithm with step tracking
         function dijkstra(start, end, criteria) {
+            // Prevent route finding if start/end not in stations
+            if (!stations[start] || !stations[end]) {
+                alert('Start or end station does not exist.');
+                return null;
+            }
+            
             console.log(`Finding route from ${start} to ${end} optimizing for ${criteria}`);
             
             if (!networkGraph[start] || !stations[end]) {
@@ -829,6 +854,196 @@
             }
         }
         
+        // --- CRUD Modal Logic ---
+        function showModal(html, onSubmit) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = html;
+            modal.style.display = 'flex';
+            modalContent.onsubmit = function(e) {
+                e.preventDefault();
+                onSubmit && onSubmit(new FormData(modalContent));
+                modal.style.display = 'none';
+            };
+            modalContent.querySelectorAll('button[type="button"]').forEach(btn => {
+                btn.onclick = () => { modal.style.display = 'none'; };
+            });
+        }
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) modal.style.display = 'none';
+        };
+        // --- CRUD Station ---
+        function showAddStationModal() {
+            showModal(`
+                <form>
+                    <h3>Add Station</h3>
+                    <label>ID</label><input name="id" required />
+                    <label>Name</label><input name="name" required />
+                    <label>Latitude</label><input name="lat" type="number" step="any" required />
+                    <label>Longitude</label><input name="lon" type="number" step="any" required />
+                    <label>Area</label><input name="area" />
+                    <div class="modal-actions">
+                        <button type="submit">Add</button>
+                        <button type="button">Cancel</button>
+                    </div>
+                </form>
+            `, (form) => {
+                const id = form.get('id');
+                if (stations[id]) { alert('ID already exists!'); return; }
+                stations[id] = {
+                    name: form.get('name'),
+                    lat: parseFloat(form.get('lat')),
+                    lon: parseFloat(form.get('lon')),
+                    area: form.get('area') || ''
+                };
+                networkGraph[id] = [];
+                refreshMapAndUI();
+            });
+        }
+        function showEditStationModal() {
+            let options = Object.keys(stations).map(id => `<option value="${id}">${id} - ${stations[id].name}</option>`).join('');
+            showModal(`
+                <form>
+                    <h3>Edit Station</h3>
+                    <label>Station</label><select name="id" required>${options}</select>
+                    <label>Name</label><input name="name" required />
+                    <label>Latitude</label><input name="lat" type="number" step="any" required />
+                    <label>Longitude</label><input name="lon" type="number" step="any" required />
+                    <label>Area</label><input name="area" />
+                    <div class="modal-actions">
+                        <button type="submit">Save</button>
+                        <button type="button">Cancel</button>
+                    </div>
+                </form>
+            `, (form) => {
+                const id = form.get('id');
+                stations[id] = {
+                    name: form.get('name'),
+                    lat: parseFloat(form.get('lat')),
+                    lon: parseFloat(form.get('lon')),
+                    area: form.get('area') || ''
+                };
+                refreshMapAndUI();
+            });
+            // Prefill on select
+            setTimeout(() => {
+                const select = document.querySelector('#modalContent select[name="id"]');
+                const name = document.querySelector('#modalContent input[name="name"]');
+                const lat = document.querySelector('#modalContent input[name="lat"]');
+                const lon = document.querySelector('#modalContent input[name="lon"]');
+                const area = document.querySelector('#modalContent input[name="area"]');
+                function fill() {
+                    const id = select.value;
+                    name.value = stations[id].name;
+                    lat.value = stations[id].lat;
+                    lon.value = stations[id].lon;
+                    area.value = stations[id].area;
+                }
+                select.onchange = fill;
+                fill();
+            }, 100);
+        }
+        function showDeleteStationModal() {
+            let options = Object.keys(stations).map(id => `<option value="${id}">${id} - ${stations[id].name}</option>`).join('');
+            showModal(`
+                <form>
+                    <h3>Delete Station</h3>
+                    <label>Station</label><select name="id" required>${options}</select>
+                    <div class="modal-actions">
+                        <button type="submit">Delete</button>
+                        <button type="button">Cancel</button>
+                    </div>
+                </form>
+            `, (form) => {
+                const id = form.get('id');
+                // Remove from stations
+                delete stations[id];
+                // Remove all outgoing connections from this station
+                delete networkGraph[id];
+                // Remove all incoming connections to this station
+                for (let from in networkGraph) {
+                    if (Array.isArray(networkGraph[from])) {
+                        networkGraph[from] = networkGraph[from].filter(e => e.to !== id);
+                    }
+                }
+                // Extra: Remove any marker if still present
+                if (stationMarkers[id]) {
+                    map.removeLayer(stationMarkers[id]);
+                    delete stationMarkers[id];
+                }
+                refreshMapAndUI();
+            });
+        }
+        // --- CRUD Connection ---
+        function showAddConnectionModal() {
+            let options = Object.keys(stations).map(id => `<option value="${id}">${id} - ${stations[id].name}</option>`).join('');
+            showModal(`
+                <form>
+                    <h3>Add Connection</h3>
+                    <label>From</label><select name="from" required>${options}</select>
+                    <label>To</label><select name="to" required>${options}</select>
+                    <label>Distance</label><input name="distance" type="number" step="any" required />
+                    <label>Time</label><input name="time" type="number" step="any" required />
+                    <label>Cost</label><input name="cost" type="number" step="any" required />
+                    <label>Transfers</label><input name="transfers" type="number" step="1" required />
+                    <label>Mode</label><input name="mode" required />
+                    <div class="modal-actions">
+                        <button type="submit">Add</button>
+                        <button type="button">Cancel</button>
+                    </div>
+                </form>
+            `, (form) => {
+                const from = form.get('from');
+                const to = form.get('to');
+                if (!networkGraph[from]) networkGraph[from] = [];
+                networkGraph[from].push({
+                    to: to,
+                    distance: parseFloat(form.get('distance')),
+                    time: parseFloat(form.get('time')),
+                    cost: parseFloat(form.get('cost')),
+                    transfers: parseInt(form.get('transfers')),
+                    mode: form.get('mode')
+                });
+                refreshMapAndUI();
+            });
+        }
+        function showDeleteConnectionModal() {
+            let options = Object.keys(stations).map(id => `<option value="${id}">${id} - ${stations[id].name}</option>`).join('');
+            showModal(`
+                <form>
+                    <h3>Delete Connection</h3>
+                    <label>From</label><select name="from" required>${options}</select>
+                    <label>To</label><select name="to" required>${options}</select>
+                    <div class="modal-actions">
+                        <button type="submit">Delete</button>
+                        <button type="button">Cancel</button>
+                    </div>
+                </form>
+            `, (form) => {
+                const from = form.get('from');
+                const to = form.get('to');
+                if (networkGraph[from]) {
+                    networkGraph[from] = networkGraph[from].filter(e => e.to !== to);
+                }
+                refreshMapAndUI();
+            });
+        }
+        // --- Refresh UI after CRUD ---
+        function refreshMapAndUI() {
+            // Remove all markers and lines
+            for (let id in stationMarkers) { map.removeLayer(stationMarkers[id]); }
+            stationMarkers = {};
+            clearConnections();
+            clearRoute();
+            // Remove all connection lines
+            connectionLines.forEach(line => map.removeLayer(line));
+            connectionLines = [];
+            addStationMarkers();
+            drawAllConnections();
+            populateStationSelects();
+            updateStats();
+        }
         // Initialize everything when page loads
         window.onload = function() {
             initMap();

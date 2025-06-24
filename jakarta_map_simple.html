@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Jakarta Transportation Network - Interactive Route Visualization</title>
+<meta charset='utf-8' />
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<link rel='stylesheet' href='https://unpkg.com/leaflet@1.7.1/dist/leaflet.css' />
+<script src='https://unpkg.com/leaflet@1.7.1/dist/leaflet.js'></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+#map { height: 500px; width: 100%; border: 3px solid #333; border-radius: 10px; }
+.info { background: #ffffff; padding: 15px; margin: 10px 0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+th { background-color: #4CAF50; color: white; }
+.route-demo { background: #e8f5e8; padding: 15px; margin: 10px 0; border-radius: 8px; border-left: 5px solid #4CAF50; }
+h1 { color: #333; text-align: center; }
+h2, h3 { color: #555; }
+select, button { padding: 6px 10px; margin: 0 5px 10px 0; border-radius: 5px; border: 1px solid #aaa; }
+</style>
+</head>
+<body>
+<h1>🚌 Jakarta Transportation Network - Interactive Route Map</h1>
+<div class='info'>
+<h2>🔎 Cari Rute Optimal:</h2>
+<label for="from">Asal:</label>
+<select id="from"></select>
+<label for="to">Tujuan:</label>
+<select id="to"></select>
+<label for="criteria">Kriteria:</label>
+<select id="criteria">
+  <option value="time">Waktu tercepat</option>
+  <option value="distance">Jarak terpendek</option>
+  <option value="cost">Biaya termurah</option>
+  <option value="transfers">Transfer paling sedikit</option>
+</select>
+<button onclick="findRoute()">Cari Rute</button>
+<span id="route-status" style="margin-left:10px;color:#d63031;"></span>
+</div>
+<div id='map'></div>
+<div class='route-demo' id="route-info">
+<h3>🛤️ Sample Route Demonstration</h3>
+<p><strong>Featured Route:</strong> Central_Station → University (Fastest Time)</p>
+<p>The map above shows:</p>
+<ul>
+<li>🔵 <strong>Blue Markers:</strong> All transportation stations/stops</li>
+<li>🔴 <strong>Red Route Line:</strong> Sample optimal route path</li>
+<li>📍 <strong>Interactive Elements:</strong> Click markers and routes for details</li>
+</ul>
+</div>
+<script>
+// Data node dan edge
+var nodes = [
+  {id: 'Airport', name: 'Bandara Soekarno-Hatta', lat: -6.125, lon: 106.656},
+  {id: 'Bus_Terminal', name: 'Terminal Bus', lat: -6.21, lon: 106.81},
+  {id: 'Central_Station', name: 'Stasiun Pusat', lat: -6.2, lon: 106.8},
+  {id: 'Mall_Plaza', name: 'Plaza Indonesia', lat: -6.22, lon: 106.82},
+  {id: 'University', name: 'Universitas Indonesia', lat: -6.36, lon: 106.83}
+];
+var edges = [
+  {from: 'Airport', to: 'Central_Station', distance: 25000, time: 45, cost: 50000, transfers: 1, mode: 'train+bus'},
+  {from: 'Bus_Terminal', to: 'Central_Station', distance: 1500, time: 15, cost: 5000, transfers: 0, mode: 'metro'},
+  {from: 'Bus_Terminal', to: 'Mall_Plaza', distance: 2000, time: 20, cost: 3500, transfers: 0, mode: 'bus'},
+  {from: 'Central_Station', to: 'Bus_Terminal', distance: 1500, time: 15, cost: 5000, transfers: 0, mode: 'metro'},
+  {from: 'Central_Station', to: 'Airport', distance: 25000, time: 45, cost: 50000, transfers: 1, mode: 'train+bus'},
+  {from: 'Central_Station', to: 'University', distance: 12000, time: 40, cost: 12000, transfers: 1, mode: 'train+bus'},
+  {from: 'Mall_Plaza', to: 'Bus_Terminal', distance: 2000, time: 20, cost: 3500, transfers: 0, mode: 'bus'},
+  {from: 'Mall_Plaza', to: 'University', distance: 8000, time: 35, cost: 8000, transfers: 1, mode: 'bus'},
+  {from: 'University', to: 'Mall_Plaza', distance: 8000, time: 35, cost: 8000, transfers: 1, mode: 'bus'},
+  {from: 'University', to: 'Central_Station', distance: 12000, time: 40, cost: 12000, transfers: 1, mode: 'train+bus'}
+];
+
+// Inisialisasi dropdown
+function populateDropdowns() {
+  var fromSel = document.getElementById('from');
+  var toSel = document.getElementById('to');
+  fromSel.innerHTML = '';
+  toSel.innerHTML = '';
+  nodes.forEach(function(n) {
+    var opt1 = document.createElement('option');
+    opt1.value = n.id; opt1.text = n.name + ' (' + n.id + ')';
+    fromSel.appendChild(opt1);
+    var opt2 = document.createElement('option');
+    opt2.value = n.id; opt2.text = n.name + ' (' + n.id + ')';
+    toSel.appendChild(opt2);
+  });
+  fromSel.value = 'Central_Station';
+  toSel.value = 'Mall_Plaza';
+}
+populateDropdowns();
+
+// Inisialisasi peta
+var map = L.map('map').setView([-6.2, 106.8], 11);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors | Transportation Route System'
+}).addTo(map);
+
+// Marker stasiun
+var markers = {};
+nodes.forEach(function(node) {
+  var marker = L.marker([node.lat, node.lon], {
+    icon: L.divIcon({
+      className: 'custom-div-icon',
+      html: '<div style="background-color: #4264fb; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 1px 3px rgba(0,0,0,0.4);"></div>',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    })
+  }).addTo(map);
+  marker.bindPopup('<div style="min-width: 200px;"><h4 style="margin: 0 0 10px 0; color: #333;">🚉 ' + node.id + '</h4><p><strong>Name:</strong> ' + node.name + '</p><p><strong>Coordinates:</strong><br>Lat: ' + node.lat + '<br>Lon: ' + node.lon + '</p></div>');
+  markers[node.id] = marker;
+});
+
+// Simpan polyline rute terakhir
+var lastRouteLine = null;
+
+// Dijkstra Algorithm (client-side, simple)
+function findRoute() {
+  var from = document.getElementById('from').value;
+  var to = document.getElementById('to').value;
+  var criteria = document.getElementById('criteria').value;
+  document.getElementById('route-status').textContent = '';
+  if (from === to) {
+    document.getElementById('route-status').textContent = 'Asal dan tujuan sama!';
+    return;
+  }
+  // Build graph adjacency
+  var adj = {};
+  nodes.forEach(function(n) { adj[n.id] = []; });
+  edges.forEach(function(e) { adj[e.from].push(e); });
+  // Dijkstra
+  var dist = {}, prev = {}, visited = {};
+  nodes.forEach(function(n) { dist[n.id] = Infinity; prev[n.id] = null; visited[n.id] = false; });
+  dist[from] = 0;
+  var pq = [{id: from, d: 0}];
+  while (pq.length > 0) {
+    pq.sort(function(a, b) { return a.d - b.d; });
+    var u = pq.shift().id;
+    if (visited[u]) continue;
+    visited[u] = true;
+    if (u === to) break;
+    adj[u].forEach(function(e) {
+      var v = e.to;
+      var weight = e[criteria];
+      if (dist[u] + weight < dist[v]) {
+        dist[v] = dist[u] + weight;
+        prev[v] = {id: u, edge: e};
+        pq.push({id: v, d: dist[v]});
+      }
+    });
+  }
+  // Reconstruct path
+  var path = [], pathEdges = [], cur = to;
+  while (prev[cur]) {
+    path.unshift(cur);
+    pathEdges.unshift(prev[cur].edge);
+    cur = prev[cur].id;
+  }
+  if (cur === from) path.unshift(from);
+  // Show route
+  if (lastRouteLine) { map.removeLayer(lastRouteLine); lastRouteLine = null; }
+  if (path.length < 2) {
+    document.getElementById('route-status').textContent = 'Rute tidak ditemukan!';
+    document.getElementById('route-info').innerHTML = '<h3>🛤️ Route Info</h3><p>Rute tidak ditemukan.</p>';
+    return;
+  }
+  var coords = path.map(function(id) {
+    var n = nodes.find(function(x) { return x.id === id; });
+    return [n.lat, n.lon];
+  });
+  lastRouteLine = L.polyline(coords, {color: '#ff0000', weight: 5, opacity: 0.8, dashArray: '10, 5', lineJoin: 'round'}).addTo(map);
+  map.fitBounds(lastRouteLine.getBounds(), {padding: [20, 20]});
+  // Info
+  var totalDist = 0, totalTime = 0, totalCost = 0, totalTransfers = 0, modes = [];
+  pathEdges.forEach(function(e) {
+    totalDist += e.distance;
+    totalTime += e.time;
+    totalCost += e.cost;
+    totalTransfers += e.transfers;
+    modes.push(e.mode);
+  });
+  var info = '<h3>🛤️ Route Info</h3>' +
+    '<p><strong>Route:</strong> ' + path.join(' → ') + '</p>' +
+    '<p><strong>Optimization:</strong> ' + document.getElementById('criteria').options[document.getElementById('criteria').selectedIndex].text + '</p>' +
+    '<hr style="margin: 10px 0;">' +
+    '<p><strong>📏 Distance:</strong> ' + totalDist + ' meters</p>' +
+    '<p><strong>⏱️ Time:</strong> ' + totalTime + ' minutes</p>' +
+    '<p><strong>💰 Cost:</strong> $' + totalCost + '</p>' +
+    '<p><strong>🔄 Transfers:</strong> ' + totalTransfers + '</p>' +
+    '<hr style="margin: 10px 0;">' +
+    '<p><strong>🚉 Stations (' + path.length + '):</strong><br>' + path.map(function(id, i) { return (i+1) + '. ' + id; }).join('<br>') + '</p>' +
+    '<p><strong>Transport Modes:</strong> ' + modes.join(' → ') + '</p>';
+  document.getElementById('route-info').innerHTML = info;
+}
+// Tampilkan rute default saat load
+window.onload = function() { findRoute(); };
+</script>
+<h2>🚉 Station Directory:</h2>
+<table>
+<tr><th>Station ID</th><th>Station Name</th><th>Latitude</th><th>Longitude</th><th>Direct Connections</th></tr>
+<tr><td><strong>Airport</strong></td><td>Bandara Soekarno-Hatta</td><td>-6.1250</td><td>106.6556</td><td>1 routes</td></tr>
+<tr><td><strong>Bus_Terminal</strong></td><td>Terminal Bus</td><td>-6.2100</td><td>106.8100</td><td>2 routes</td></tr>
+<tr><td><strong>Central_Station</strong></td><td>Stasiun Pusat</td><td>-6.2000</td><td>106.8000</td><td>3 routes</td></tr>
+<tr><td><strong>Mall_Plaza</strong></td><td>Plaza Indonesia</td><td>-6.2200</td><td>106.8200</td><td>2 routes</td></tr>
+<tr><td><strong>University</strong></td><td>Universitas Indonesia</td><td>-6.3600</td><td>106.8300</td><td>2 routes</td></tr>
+</table>
+<h2>🛤️ Network Connection Matrix:</h2>
+<table>
+<tr><th>Origin</th><th>Destination</th><th>Transport Mode</th><th>Distance (m)</th><th>Time (min)</th><th>Cost ($)</th><th>Transfers</th></tr>
+<tr><td>Airport</td><td>Central_Station</td><td><strong>train+bus</strong></td><td>25000.0000</td><td>45.0000</td><td>50000.0000</td><td>1</td></tr>
+<tr><td>Bus_Terminal</td><td>Central_Station</td><td><strong>metro</strong></td><td>1500.0000</td><td>15.0000</td><td>5000.0000</td><td>0</td></tr>
+<tr><td>Bus_Terminal</td><td>Mall_Plaza</td><td><strong>bus</strong></td><td>2000.0000</td><td>20.0000</td><td>3500.0000</td><td>0</td></tr>
+<tr><td>Central_Station</td><td>Bus_Terminal</td><td><strong>metro</strong></td><td>1500.0000</td><td>15.0000</td><td>5000.0000</td><td>0</td></tr>
+<tr><td>Central_Station</td><td>Airport</td><td><strong>train+bus</strong></td><td>25000.0000</td><td>45.0000</td><td>50000.0000</td><td>1</td></tr>
+<tr><td>Central_Station</td><td>University</td><td><strong>train+bus</strong></td><td>12000.0000</td><td>40.0000</td><td>12000.0000</td><td>1</td></tr>
+<tr><td>Mall_Plaza</td><td>Bus_Terminal</td><td><strong>bus</strong></td><td>2000.0000</td><td>20.0000</td><td>3500.0000</td><td>0</td></tr>
+<tr><td>Mall_Plaza</td><td>University</td><td><strong>bus</strong></td><td>8000.0000</td><td>35.0000</td><td>8000.0000</td><td>1</td></tr>
+<tr><td>University</td><td>Mall_Plaza</td><td><strong>bus</strong></td><td>8000.0000</td><td>35.0000</td><td>8000.0000</td><td>1</td></tr>
+<tr><td>University</td><td>Central_Station</td><td><strong>train+bus</strong></td><td>12000.0000</td><td>40.0000</td><td>12000.0000</td><td>1</td></tr>
+</table>
+<div class='info'>
+<h3>💡 Interactive Map Guide:</h3>
+<ul>
+<li><strong>Station Markers (🔵):</strong> Click to see station details and coordinates</li>
+<li><strong>Route Line (🔴):</strong> Click to see complete route information</li>
+<li><strong>Navigation:</strong> Use mouse wheel to zoom, drag to pan</li>
+<li><strong>Sample Route:</strong> Shows optimal path from Central_Station to University</li>
+</ul>
+<p><em>This map demonstrates the Transportation Route Recommendation System's pathfinding capabilities with interactive visualization.</em></p>
+</div>
+</body></html>
